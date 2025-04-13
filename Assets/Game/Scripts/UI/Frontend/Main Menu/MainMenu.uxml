@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Main%20Menu/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=e10935be35ccf5147989e163b36f2c43&amp;type=3#MainMenuStyles" />
+    <engine:VisualElement name="navigation-bar" style="flex-grow: 1; width: 270px; justify-content: flex-end; height: 50px; padding-bottom: 35px; padding-left: 15px;">
+        <engine:Button text="Button" name="continue" class="menuNavigationButton" />
+        <engine:Button text="Button" name="campaign" class="menuNavigationButton" />
+        <engine:Button text="Button" name="options" class="menuNavigationButton" />
+        <engine:Button text="Button" name="exit" class="menuNavigationButton" style="margin-top: 30px;" />
+    </engine:VisualElement>
+</engine:UXML>
