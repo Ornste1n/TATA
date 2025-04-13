@@ -1,9 +1,30 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Main%20Menu/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=e10935be35ccf5147989e163b36f2c43&amp;type=3#MainMenuStyles" />
-    <engine:VisualElement name="navigation-bar" style="flex-grow: 1; width: 270px; justify-content: flex-end; height: 50px; padding-bottom: 35px; padding-left: 15px;">
-        <engine:Button text="Button" name="continue" class="menuNavigationButton" />
-        <engine:Button text="Button" name="campaign" class="menuNavigationButton" />
-        <engine:Button text="Button" name="options" class="menuNavigationButton" />
-        <engine:Button text="Button" name="exit" class="menuNavigationButton" style="margin-top: 30px;" />
+    <engine:VisualElement name="navigation-bar" enabled="true" style="flex-grow: 1; width: 270px; justify-content: flex-end; height: 50px; padding-bottom: 35px; padding-left: 15px;">
+        <engine:Button text="Button" name="continue" class="menuNavigationButton">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(373946310656)" />
+            </Bindings>
+        </engine:Button>
+        <engine:Button text="Button" name="campaign" class="menuNavigationButton">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(698627383296)" />
+            </Bindings>
+        </engine:Button>
+        <engine:Button text="Button" name="options" class="menuNavigationButton">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(477260406784)" />
+            </Bindings>
+        </engine:Button>
+        <engine:Button text="Button" name="exit" class="menuNavigationButton" style="margin-top: 65px;">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(529127170048)" />
+            </Bindings>
+        </engine:Button>
+    </engine:VisualElement>
+    <engine:VisualElement name="options-window" class="hidden" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.71);">
+        <engine:VisualElement name="body" class="optionBody" style="flex-grow: 1;">
+            <engine:Button text="Button" name="cancel" style="width: 191px; position: absolute; top: 974px; left: 85px;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

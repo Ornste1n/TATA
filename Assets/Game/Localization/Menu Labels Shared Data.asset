@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Menu Labels Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Menu Labels
+  m_TableCollectionNameGuidString: 1bf62d5fd9a12b7499159636392485f1
+  m_Entries:
+  - m_Id: 373946310656
+    m_Key: mainMenu.Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 477260406784
+    m_Key: mainMenu.Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 529127170048
+    m_Key: mainMenu.Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 698627383296
+    m_Key: mainMenu.Campaign
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5701877391985738119
+  references:
+    version: 2
+    RefIds:
+    - rid: 5701877391985738119
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1744565185935
