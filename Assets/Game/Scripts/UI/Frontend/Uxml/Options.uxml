@@ -1,0 +1,95 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=e10935be35ccf5147989e163b36f2c43&amp;type=3#MainMenuStyles" />
+    <engine:VisualElement name="options-window" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.71);">
+        <engine:VisualElement name="body" class="optionBody" style="flex-grow: 1;">
+            <engine:Label text="Label" name="title-option" style="top: 0; width: 100%; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Bold.ttf?fileID=12800000&amp;guid=8896e24d7eeb8f94fa0d1f0411e0757d&amp;type=3#Philosopher-Bold&quot;); -unity-text-align: upper-center; font-size: 64px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(1926614736896)" />
+                </Bindings>
+            </engine:Label>
+            <engine:VisualElement name="all-options" style="width: 330px; padding-bottom: 100px; padding-left: 15px; padding-top: 5px;">
+                <engine:Button text="Button" name="game" enabled="true" class="menuNavigationButton optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(385098964992)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="graphics" class="menuNavigationButton optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(389037416448)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="audio" class="menuNavigationButton optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(391495278592)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="controls" class="menuNavigationButton optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(393680510976)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="colors" class="menuNavigationButton optionButton" style="margin-top: 32px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(396645883904)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="hotkeys" class="menuNavigationButton optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(898532106240)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="bug-report" class="menuNavigationButton optionButton" style="margin-top: 32px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(967515824128)" />
+                    </Bindings>
+                </engine:Button>
+            </engine:VisualElement>
+            <engine:VisualElement name="options-content" class="optionContent" style="height: 80%;">
+                <engine:VisualElement name="graphics-content" style="flex-grow: 1;">
+                    <engine:VisualElement name="screen-options" class="optionsContent" style="flex-grow: 1;">
+                        <engine:Label text="Label" name="screen-title" class="contentOptionTitle">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2229804195840)" />
+                            </Bindings>
+                        </engine:Label>
+                        <engine:VisualElement name="screen-options-container" class="optionsContainer">
+                            <engine:DropdownField label="Dropdown" name="display-mode" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2397777682432)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="refresh-rate" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2943217557504)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="resolution" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2299517722624)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:Toggle label="Toggle" name="Toggle" focusable="false" class="option-toggle" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="navigation-menu" style="flex-grow: 1; position: absolute; width: 1032px; height: 15%; bottom: 0; align-self: center; align-content: auto; align-items: center; flex-direction: row; justify-content: space-between; padding-bottom: 10px; left: 359px;">
+                <engine:Button text="Button" name="apply" class="button-window okButton" style="position: relative;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(1186659819520)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="cancel" class="button-window" style="position: relative; margin-right: 110px; margin-left: 20px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(1272487862272)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="reset" class="button-window" style="right: 0; left: auto; bottom: auto; width: 350px; font-size: 35px; color: rgb(232, 232, 232);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(1396334450585600)" />
+                    </Bindings>
+                </engine:Button>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Options Table_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2e4624807878fbc49919a68454c34fe9, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 385098964992
+    m_Localized: General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 389037416448
+    m_Localized: Graphics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391495278592
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 393680510976
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 396645883904
+    m_Localized: Colors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 898532106240
+    m_Localized: Hotkeys
+    m_Metadata:
+      m_Items: []
+  - m_Id: 967515824128
+    m_Localized: Feedback
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1186659819520
+    m_Localized: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1272487862272
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1926614736896
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2229804195840
+    m_Localized: 'Display
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2299517722624
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2397777682432
+    m_Localized: Display Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2882324652032
+    m_Localized: Vertical sync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2943217557504
+    m_Localized: Refresh Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1396334450585600
+    m_Localized: Restore Defaults
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
