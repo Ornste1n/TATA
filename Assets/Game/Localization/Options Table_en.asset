@@ -84,6 +84,22 @@ MonoBehaviour:
     m_Localized: Restore Defaults
     m_Metadata:
       m_Items: []
+  - m_Id: 1752207178326016
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1752855269597184
+    m_Localized: Borderless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2127281617776640
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2129741199585280
+    m_Localized: Display
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

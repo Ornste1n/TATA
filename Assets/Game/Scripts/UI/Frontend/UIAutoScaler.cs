@@ -10,7 +10,6 @@ namespace Game.Scripts.UI.Frontend
         [Space]
         [SerializeField] private float _minFontSize = 1f;
         
-        [Sirenix.OdinInspector.Button("Execute")]
         private void FitAll()
         {
             foreach (UIDocument document in _uiDocuments)

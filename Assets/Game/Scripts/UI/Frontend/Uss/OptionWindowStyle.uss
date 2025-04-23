@@ -1,0 +1,311 @@
+.optionBody {
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Window.psd?fileID=21300000&guid=6858abb4516aae344881bf286b3aac33&type=3#SF Window");
+    -unity-background-image-tint-color: rgb(53, 3, 89);
+    width: 75%;
+    align-self: center;
+    margin-top: 1%;
+    margin-left: 0;
+    margin-bottom: 1%;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    padding-top: 40px;
+    padding-left: 30px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 30px;
+}
+
+.contentOptionTitle {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Bold.ttf?fileID=12800000&guid=8896e24d7eeb8f94fa0d1f0411e0757d&type=3#Philosopher-Bold");
+    font-size: 30px;
+}
+
+.optionContent {
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Button.psd?fileID=21300000&guid=9a32a6cc2cb803443983d45d4a513506&type=3#SF Button - Hover");
+    width: 75%;
+    height: 72%;
+    -unity-background-image-tint-color: rgb(53, 3, 89);
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.optionDropdown {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    font-size: 24px;
+    -unity-text-align: middle-center;
+    -unity-font-style: normal;
+    white-space: pre;
+    text-overflow: clip;
+    width: 485px;
+    height: 48px;
+}
+
+.optionsContainer {
+    padding-top: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: normal;
+}
+
+.unity-base-field__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    unity-text-overflow: shrink;
+    color: rgb(204, 204, 204);
+    font-size: 24px;
+    -unity-text-align: middle-right;
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    flex-wrap: wrap-reverse;
+    flex-direction: column-reverse;
+    width: 225px;
+    background-color: rgba(0, 0, 0, 0);
+    padding-right: 5px;
+}
+
+.unity-base-field:focus:enabled .unity-label {
+    color: rgb(255, 255, 255);
+}
+
+DropdownField:hover .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(116, 1, 198);
+}
+
+DropdownField:active:enabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(116, 1, 198);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+DropdownField:focus:enabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(116, 1, 198);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.unity-base-dropdown__item:hover:enabled {
+    background-color: rgb(97, 1, 166);
+}
+
+DropdownField .unity-base-field__input {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(97, 1, 166);
+    -unity-slice-scale: 0.7px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: rgb(172, 0, 255);
+    background-size: 100% 70%;
+}
+
+.unity-base-dropdown__item {
+    flex-grow: 1;
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    white-space: pre-wrap;
+    text-overflow: clip;
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+}
+
+.unity-base-dropdown #unity-content-container {
+    background-color: rgba(53, 3, 89, 0.96);
+}
+
+.unity-base-dropdown__checkmark {
+    height: 25px;
+    width: 20px;
+    align-self: flex-end;
+}
+
+.unity-base-dropdown__container-outer {
+    border-left-color: rgb(97, 1, 166);
+    border-right-color: rgb(97, 1, 166);
+    border-top-color: rgb(97, 1, 166);
+    border-bottom-color: rgb(97, 1, 166);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    -unity-text-align: upper-right;
+}
+
+.auto-scale {
+}
+
+.unity-scroll-view {
+    background-color: rgb(97, 1, 166);
+    border-left-color: rgb(255, 0, 106);
+    border-right-color: rgb(255, 0, 106);
+    border-top-color: rgb(255, 0, 106);
+    border-bottom-color: rgb(255, 0, 106);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.unity-button {
+}
+
+.unity-button:hover:enabled {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(97, 1, 166);
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.optionButton {
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(68, 3, 115);
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    -unity-text-align: middle-left;
+    padding-left: 20px;
+    height: 70px;
+}
+
+.button-window {
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(68, 3, 115);
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    font-size: 35px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    width: 270px;
+    height: 75px;
+}
+
+.okButton:hover:enabled {
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(255, 108, 0);
+    border-top-width: 9px;
+    border-right-width: 9px;
+    border-bottom-width: 9px;
+    border-left-width: 9px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
+    border-bottom-left-radius: 9px;
+}
+
+.okButton {
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    -unity-background-image-tint-color: rgb(0, 117, 255);
+}
+
+.option-toggle > .unity-toggle__input {
+    focusable: false;
+    outline: none;
+    border-image: none;
+    margin-left: 8px;
+}
+
+.option-toggle > .unity-toggle__input > .unity-toggle__checkmark {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(96, 0, 165, 0.16);
+    border: 2px solid rgb(97, 1, 166);
+    border-left-color: rgb(97, 1, 166);
+    border-right-color: rgb(97, 1, 166);
+    border-top-color: rgb(97, 1, 166);
+    border-bottom-color: rgb(97, 1, 166);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.option-toggle:hover:enabled > .unity-toggle__input > .unity-toggle__checkmark {
+    border-color: rgb(255, 9, 9);
+    border-left-color: rgb(116, 1, 198);
+    border-right-color: rgb(116, 1, 198);
+    border-top-color: rgb(116, 1, 198);
+    border-bottom-color: rgb(116, 1, 198);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.option-toggle:checked > .unity-toggle__input > .unity-toggle__checkmark {
+    border-color: white;
+    border-left-color: rgb(116, 1, 198);
+    border-right-color: rgb(116, 1, 198);
+    border-top-color: rgb(116, 1, 198);
+    border-bottom-color: rgb(116, 1, 198);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.option-toggle:checked:hover:enabled > .unity-toggle__input > .unity-toggle__checkmark {
+    border-color: white;
+    border-left-color: rgb(116, 1, 198);
+    border-right-color: rgb(116, 1, 198);
+    border-top-color: rgb(116, 1, 198);
+    border-bottom-color: rgb(116, 1, 198);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.hidden {
+    display: none;
+}

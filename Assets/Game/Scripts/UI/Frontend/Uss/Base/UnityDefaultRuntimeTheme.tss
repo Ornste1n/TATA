@@ -1,6 +1,8 @@
 @import url("unity-theme://default");
 
-@import url("/Assets/Game/Scripts/UI/Frontend/Uss/MainMenuStyles.uss");
+@import url("/Assets/Game/Scripts/UI/Frontend/Uss/OptionWindowStyle.uss");
+@import url("/Assets/Game/Scripts/UI/Frontend/Uss/MainMenuStyle.uss");
+
 
 
 

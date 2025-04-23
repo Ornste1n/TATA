@@ -1,0 +1,14 @@
+.menuNavigationButton {
+    -unity-background-image-tint-color: rgb(68, 3, 115);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    font-size: 40px;
+    width: 325px;
+    height: 75px;
+}

@@ -81,6 +81,22 @@ MonoBehaviour:
 '
     m_Metadata:
       m_Items: []
+  - m_Id: 1752207178326016
+    m_Key: options.Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1752855269597184
+    m_Key: options.Borderless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2127281617776640
+    m_Key: options.Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2129741199585280
+    m_Key: options.Display
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
