@@ -8,7 +8,7 @@
                 </Bindings>
             </engine:Label>
             <engine:VisualElement name="all-options" style="width: 330px; padding-bottom: 100px; padding-left: 15px; padding-top: 5px;">
-                <engine:Button text="Button" name="game" enabled="true" class="optionButton">
+                <engine:Button text="Button" name="general" enabled="true" class="optionButton">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(385098964992)" />
                     </Bindings>
@@ -45,7 +45,23 @@
                 </engine:Button>
             </engine:VisualElement>
             <engine:VisualElement name="options-content" class="optionContent" style="height: 80%;">
-                <engine:VisualElement name="graphics-content" style="flex-grow: 1;">
+                <engine:VisualElement name="general-content" style="flex-direction: column;">
+                    <engine:VisualElement name="game-options" class="optionsContent" style="flex-grow: 1;">
+                        <engine:Label text="Label" name="game-title" class="contentOptionTitle">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(4523016879484928)" />
+                            </Bindings>
+                        </engine:Label>
+                        <engine:VisualElement name="game-options-container" class="optionsContainer">
+                            <engine:DropdownField label="Dropdown" name="language" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(4522968070369280)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:VisualElement>
+                <engine:VisualElement name="graphics-content" class="hidden" style="flex-direction: column;">
                     <engine:VisualElement name="screen-options" class="optionsContent" style="flex-grow: 1;">
                         <engine:Label text="Label" name="screen-title" class="contentOptionTitle">
                             <Bindings>
@@ -58,7 +74,7 @@
                                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2397777682432)" />
                                 </Bindings>
                             </engine:DropdownField>
-                            <engine:DropdownField label="Dropdown" name="refresh-rate" class="optionDropdown">
+                            <engine:DropdownField label="Dropdown" name="refresh-rate" enabled="true" class="optionDropdown">
                                 <Bindings>
                                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2943217557504)" />
                                 </Bindings>
@@ -68,12 +84,76 @@
                                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2299517722624)" />
                                 </Bindings>
                             </engine:DropdownField>
-                            <engine:Toggle label="Toggle" name="Toggle" focusable="false" class="option-toggle" style="height: 48px;">
+                            <engine:Toggle label="Toggle" name="vsync" focusable="false" class="option-toggle" style="height: 48px;">
                                 <Bindings>
                                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(2882324652032)" />
                                 </Bindings>
                             </engine:Toggle>
                         </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:VisualElement name="graphics-options" class="optionsContent" style="flex-grow: 1; margin-top: 40px;">
+                        <engine:Label text="Label" name="graphics-title" class="contentOptionTitle">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(389037416448)" />
+                            </Bindings>
+                        </engine:Label>
+                        <engine:VisualElement name="graphics-options-container" class="optionsContainer">
+                            <engine:DropdownField label="Dropdown" name="graphics-quality" class="optionDropdown" style="margin-bottom: 25px; margin-right: 40px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845222541438976)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="textures" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3846150401175552)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="shaders" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845387138510848)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="shadows" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845630009683968)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="terrain" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845691493986304)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="models" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3846055387607040)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="lightning" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845458466844672)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="physics" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845976928956416)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                            <engine:DropdownField label="Dropdown" name="post-processing" class="optionDropdown">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(3845870297165824)" />
+                                </Bindings>
+                            </engine:DropdownField>
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:VisualElement>
+                <engine:VisualElement name="audio-content" class="hidden" style="flex-direction: column;">
+                    <engine:VisualElement name="audio-options" class="optionsContent" style="flex-grow: 1;">
+                        <engine:Label text="Label" name="audio-title" class="contentOptionTitle">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(4524980413542400)" />
+                            </Bindings>
+                        </engine:Label>
+                        <engine:VisualElement name="audio-options-container" class="optionsContainer" />
                     </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>

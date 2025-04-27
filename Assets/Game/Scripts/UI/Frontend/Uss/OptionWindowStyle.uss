@@ -309,3 +309,39 @@ DropdownField .unity-base-field__input {
 .hidden {
     display: none;
 }
+
+DropdownField:disabled {
+    opacity: 0.6;
+}
+
+DropdownField:disabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+    -unity-background-image-tint-color: rgb(60, 0, 103);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+DropdownField:disabled .unity-base-field__label {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+DropdownField:disabled .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: rgb(99, 3, 145);
+}
+
+.unity-button:focus:enabled {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.optionButton:focus:enabled {
+    -unity-background-image-tint-color: rgb(97, 1, 166);
+}
+
+.activeOptionButton {
+    -unity-background-image-tint-color: rgb(97, 1, 166);
+}

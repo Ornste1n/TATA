@@ -97,6 +97,76 @@ MonoBehaviour:
     m_Key: options.Display
     m_Metadata:
       m_Items: []
+  - m_Id: 3844409626603520
+    m_Key: options.Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3844769304948736
+    m_Key: options.Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845010414514176
+    m_Key: options.High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845222541438976
+    m_Key: option.GraphicsQuality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845387138510848
+    m_Key: options.Shaders
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845458466844672
+    m_Key: options.Lighting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845630009683968
+    m_Key: options.Shadows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845691493986304
+    m_Key: options.Terrain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845802110365696
+    m_Key: options.Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845870297165824
+    m_Key: options.Post-Processing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3845976928956416
+    m_Key: options.Physics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3846055387607040
+    m_Key: options.Models
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3846150401175552
+    m_Key: options.TextureQuality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3875965313363968
+    m_Key: optoins.Custom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4522968070369280
+    m_Key: options.Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4523016879484928
+    m_Key: options.Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4524980413542400
+    m_Key: 'options.Audio
+
+'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
