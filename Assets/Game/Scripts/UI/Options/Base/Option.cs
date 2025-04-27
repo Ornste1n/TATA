@@ -26,10 +26,10 @@ namespace Game.Scripts.UI.Options.Base
             Panel = OptionsWindow.Root.Q<VisualElement>(name);
         }
         
-        protected virtual void InitializeCollection()
+        protected void InitializeCollection(int callbacksCapacity = 4, int elementsCapacity = 4)
         {
-            ChangedCallbacks = new HashSet<Action>(4);
-            _elementsCallbacks = new Dictionary<IEventHandler, Action>(4);
+            ChangedCallbacks = new HashSet<Action>(callbacksCapacity);
+            _elementsCallbacks = new Dictionary<IEventHandler, Action>(elementsCapacity);
         }
                 
         protected void SubscribeChangedCallback(VisualElement element, Action callback)

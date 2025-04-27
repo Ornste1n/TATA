@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 using System.Collections.Generic;
 using Game.Scripts.UI.Options.Base;
+using Game.Scripts.UI.Options.Models;
 
 namespace Game.Scripts.UI.Options
 {
