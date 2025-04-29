@@ -171,19 +171,6 @@ DropdownField .unity-base-field__input {
     border-left-width: 0;
 }
 
-.unity-button {
-}
-
-.unity-button:hover:enabled {
-    border-left-color: rgba(0, 0, 0, 0);
-    border-right-color: rgba(0, 0, 0, 0);
-    border-top-color: rgba(0, 0, 0, 0);
-    border-bottom-color: rgba(0, 0, 0, 0);
-    -unity-background-image-tint-color: rgb(97, 1, 166);
-    background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
-    background-color: rgba(0, 0, 0, 0);
-}
-
 .optionButton {
     background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
     background-color: rgba(0, 0, 0, 0);
@@ -200,6 +187,15 @@ DropdownField .unity-base-field__input {
     height: 70px;
 }
 
+.optionButton:hover:enabled {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(97, 1, 166);
+    background-color: rgba(0, 0, 0, 0);
+}
+
 .button-window {
     background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
     -unity-background-image-tint-color: rgb(68, 3, 115);
@@ -213,6 +209,15 @@ DropdownField .unity-base-field__input {
     border-bottom-color: rgba(0, 0, 0, 0);
     width: 270px;
     height: 75px;
+}
+
+.button-window:hover:enabled {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(97, 1, 166);
 }
 
 .okButton:hover:enabled {

@@ -9,10 +9,11 @@ namespace Game.Scripts.UI.Options.Models
     {
         #region Display
 
-        public int VerticalSync;
-        public Resolution Resolution;
-        public RefreshRate RefreshRate;
+        public int Width;
+        public int Height;
+        public uint RefreshRate;
         public FullScreenMode ScreenMode;
+        public bool VerticalSync;
 
         #endregion
 

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Game.Scripts.UI.Options.Base
 {
@@ -13,7 +14,7 @@ namespace Game.Scripts.UI.Options.Base
         public VisualElement Panel { get; }
         protected OptionsWindow OptionsWindow { get; }
         
-        public abstract void Save();
+        public abstract Task Save();
         public abstract void Reset();
 
         public virtual bool HasChanged() => ChangedCallbacks?.Count != 0;

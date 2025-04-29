@@ -1,0 +1,21 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Scripts/Editor/Custom/consoleStyle.uss?fileID=7433441132597879392&amp;guid=d17f399722c7a5e4da1dae8dddb3c8c3&amp;type=3#consoleStyle" />
+    <engine:VisualElement name="files-content" class="content" style="height: 140px; margin-top: 10px;">
+        <engine:VisualElement name="file-persistent-data" class="fileBlock">
+            <engine:Label text="Persistent Data" name="persistent-data" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />
+            <engine:Button text="Открыть" name="persistent-data-open" class="console-button" />
+        </engine:VisualElement>
+        <engine:VisualElement name="file-logs" class="fileBlock">
+            <engine:Label text="Логи" name="logs" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />
+            <engine:Button text="Открыть" name="logs-open" class="console-button" />
+        </engine:VisualElement>
+        <engine:VisualElement name="file-graphics" class="fileBlock">
+            <engine:Label text="Графика" name="graphics" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />
+            <engine:Button text="Открыть" name="graphics-open" class="console-button" />
+        </engine:VisualElement>
+        <engine:VisualElement name="error-error" class="fileBlock">
+            <engine:Label text="Ошибки" name="errors" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />
+            <engine:Button text="Открыть" name="errors-open" class="console-button" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

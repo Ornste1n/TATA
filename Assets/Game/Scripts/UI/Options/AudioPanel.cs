@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Game.Scripts.UI.Options.Base;
 
 namespace Game.Scripts.UI.Options
@@ -8,8 +9,9 @@ namespace Game.Scripts.UI.Options
         {
         }
 
-        public override void Save()
+        public override Task Save()
         {
+            return Task.CompletedTask;
         }
 
         public override void Reset()

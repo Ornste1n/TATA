@@ -1,6 +1,7 @@
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Game.Scripts.UI.Options.Base;
 using UnityEngine.Localization.Settings;
 
@@ -14,8 +15,9 @@ namespace Game.Scripts.UI.Options
             InitLanguage();
         }
 
-        public override void Save()
+        public override Task Save()
         {
+            return Task.CompletedTask;
         }
 
         public override void Reset()

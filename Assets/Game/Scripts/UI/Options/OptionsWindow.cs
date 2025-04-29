@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Game.Scripts.Settings;
 using UnityEngine.UIElements;
 using System.Threading.Tasks;
 using UnityEngine.Localization;
@@ -19,7 +20,7 @@ namespace Game.Scripts.UI.Options
         public SerializedDictionary<FullScreenMode, TableEntryReference> _screenModesNames;
         [Space]
         [SerializedDictionary("Quality", "Localization Name")]
-        public SerializedDictionary<QualityLevel, TableEntryReference> _qualityLevel;
+        public SerializedDictionary<Quality, TableEntryReference> _qualityLevel;
         [Space] 
         [SerializeField] private TableEntryReference _customQualityReference;
 
@@ -46,7 +47,7 @@ namespace Game.Scripts.UI.Options
 
         #region Localize
         public string CustomLocalLabel { get; private set; }
-        public Dictionary<string, QualityLevel> QualityLocalize { get; private set; }
+        public Dictionary<string, Quality> QualityLocalize { get; private set; }
         public Dictionary<string, FullScreenMode> ScreenModeLocalize { get; private set; }
         #endregion
 
@@ -118,7 +119,7 @@ namespace Game.Scripts.UI.Options
             _screenModesNames.Clear();
             _screenModesNames = null;
 
-            QualityLocalize = new Dictionary<string, QualityLevel>(3);
+            QualityLocalize = new Dictionary<string, Quality>(3);
             
             foreach (var (quality, reference) in _qualityLevel)
             {
