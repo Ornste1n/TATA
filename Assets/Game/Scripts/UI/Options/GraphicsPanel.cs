@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace Game.Scripts.UI.Options
 {
-    public sealed class GraphicsPanel : Option
+    public sealed class GraphicsPanel : OptionPanel
     {
         #region Display
 
@@ -73,27 +73,34 @@ namespace Game.Scripts.UI.Options
         {
             List<string> qualityLevels = OptionsWindow.QualityLocalize.Keys.ToList();
 
-            RegisterGraphics(ref _models, "models", qualityLevels, GraphicsOption.UpdateModels);
-            RegisterGraphics(ref _shaders, "shaders", qualityLevels, GraphicsOption.UpdateShaders);
-            RegisterGraphics(ref _shadows, "shadows", qualityLevels, GraphicsOption.UpdateShadows);
-            RegisterGraphics(ref _terrain, "terrain", qualityLevels, GraphicsOption.UpdateTerrain);
-            RegisterGraphics(ref _physics, "physics", qualityLevels, GraphicsOption.UpdatePhysics);
-            RegisterGraphics(ref _textures, "textures", qualityLevels, GraphicsOption.UpdateTexture);
-            RegisterGraphics(ref _lightning, "lightning", qualityLevels, GraphicsOption.UpdateLightning);
-            RegisterGraphics(ref _postProcessing, "post-processing", qualityLevels, GraphicsOption.UpdatePostprocessing);
+            RegisterGraphics(ref _models, "models", qualityLevels, GraphicsQuality.Models, GraphicsOption.UpdateModels);
+            RegisterGraphics(ref _shaders, "shaders", qualityLevels, GraphicsQuality.Shaders, GraphicsOption.UpdateShaders);
+            RegisterGraphics(ref _shadows, "shadows", qualityLevels, GraphicsQuality.Shadows, GraphicsOption.UpdateShadows);
+            RegisterGraphics(ref _terrain, "terrain", qualityLevels, GraphicsQuality.Terrain, GraphicsOption.UpdateTerrain);
+            RegisterGraphics(ref _physics, "physics", qualityLevels, GraphicsQuality.Physics, GraphicsOption.UpdatePhysics);
+            RegisterGraphics(ref _textures, "textures", qualityLevels, GraphicsQuality.Textures, GraphicsOption.UpdateTexture);
+            RegisterGraphics(ref _lightning, "lightning", qualityLevels, GraphicsQuality.Lightning, GraphicsOption.UpdateLightning);
+            RegisterGraphics(ref _postProcessing, "post-processing", qualityLevels, GraphicsQuality.PostProcessing, GraphicsOption.UpdatePostprocessing);
 
             _graphicsQuality = OptionsWindow.Root.Q<DropdownField>("graphics-quality");
             _graphicsQuality.RegisterCallback<ChangeEvent<string>>(ChangeGraphicsQuality);
             _graphicsQuality.choices = qualityLevels;
         }
         
-        private void RegisterGraphics([CanBeNull] ref DropdownField field, string name, List<string> choices, Action<Quality> graphicsMethod)
+        private void RegisterGraphics
+        (
+            [CanBeNull] ref DropdownField field, 
+            string name, List<string> choices,
+            GraphicsQuality graphic, 
+            Action<Quality> graphicsMethod
+        )
         {
             field = OptionsWindow.Root.Q<DropdownField>(name);
 
             if (field == null) throw new ArgumentException("Field is null");
             
             field.choices = choices;
+            field.value = field.choices[(int)GraphicsOption.GetValue(graphic)];
             
             field.RegisterValueChangedCallback(CheckCurrentGraphicsPreset);
             _graphicsCallback.Add(field, graphicsMethod);

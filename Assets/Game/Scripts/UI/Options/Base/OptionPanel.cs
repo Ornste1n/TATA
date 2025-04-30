@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Game.Scripts.UI.Options.Base
 {
-    public abstract class Option : IDisposable
+    public abstract class OptionPanel : IDisposable
     {
         protected HashSet<Action> ChangedCallbacks;
         private Dictionary<IEventHandler, Action> _elementsCallbacks;
@@ -19,7 +19,7 @@ namespace Game.Scripts.UI.Options.Base
 
         public virtual bool HasChanged() => ChangedCallbacks?.Count != 0;
 
-        public Option(OptionsWindow window, string name, string button)
+        public OptionPanel(OptionsWindow window, string name, string button)
         {
             OptionsWindow = window;
             

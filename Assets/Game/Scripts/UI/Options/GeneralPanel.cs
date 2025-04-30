@@ -7,7 +7,7 @@ using UnityEngine.Localization.Settings;
 
 namespace Game.Scripts.UI.Options
 {
-    public class GeneralPanel : Option
+    public class GeneralPanel : OptionPanel
     {
         public GeneralPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {

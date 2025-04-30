@@ -1,3 +1,8 @@
+.menuNavigationButton:hover:enabled {
+    -unity-background-image-tint-color: rgb(97, 1, 166);
+    background-color: rgba(0, 0, 0, 0);
+}
+
 .menuNavigationButton {
     -unity-background-image-tint-color: rgb(68, 3, 115);
     background-color: rgba(0, 0, 0, 0);

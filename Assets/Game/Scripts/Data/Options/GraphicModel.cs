@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Game.Scripts.Settings;
 using Game.Scripts.Data.Saver;
 
 namespace Game.Scripts.UI.Options.Models
@@ -17,18 +19,6 @@ namespace Game.Scripts.UI.Options.Models
 
         #endregion
 
-        #region Quality
-
-        public QualityLevel Models;
-        public QualityLevel Shaders;
-        public QualityLevel Shadows;
-        public QualityLevel Terrain;
-        public QualityLevel Physics;
-        public QualityLevel Textures;
-        public QualityLevel Lightning;
-        public QualityLevel PostProcessing;
-        public QualityLevel GraphicsQuality;
-
-        #endregion
+        public Dictionary<GraphicsQuality, Quality> Qualities;
     }
 }

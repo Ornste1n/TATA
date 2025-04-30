@@ -32,10 +32,10 @@ namespace Game.Scripts.UI.Options
         private VisualElement m_Panel;
         private Button _openOptionButton;
 
-        private Option _current;
-        private Option _generalOption;
+        private OptionPanel _current;
+        private OptionPanel _generalOptionPanel;
         
-        private readonly Dictionary<IEventHandler, Option> _panels = new(5);
+        private readonly Dictionary<IEventHandler, OptionPanel> _panels = new(5);
         
         #region const
         private const string Hidden = "hidden";
@@ -74,20 +74,20 @@ namespace Game.Scripts.UI.Options
 
         private void InitOptionButtons()
         {
-            _generalOption = new GeneralPanel(this, "general-content", "general");
+            _generalOptionPanel = new GeneralPanel(this, "general-content", "general");
             
-            RegisterPanel(_generalOption);
+            RegisterPanel(_generalOptionPanel);
             RegisterPanel(new GraphicsPanel(this, "graphics-content", "graphics"));
             RegisterPanel(new AudioPanel(this, "audio-content", "audio"));
             
-            _generalOption.Button.AddToClassList(ActiveStyle);
-            _current = _generalOption;
+            _generalOptionPanel.Button.AddToClassList(ActiveStyle);
+            _current = _generalOptionPanel;
         }
 
-        private void RegisterPanel(Option option)
+        private void RegisterPanel(OptionPanel optionPanel)
         {
-            _panels.Add(option.Button, option);
-            option.Button.RegisterCallback<ClickEvent>(ChangeOptionPanel);
+            _panels.Add(optionPanel.Button, optionPanel);
+            optionPanel.Button.RegisterCallback<ClickEvent>(ChangeOptionPanel);
         }
         
         private void ChangeOptionPanel(ClickEvent clickEvent)
@@ -138,7 +138,7 @@ namespace Game.Scripts.UI.Options
 
         private void SaveChanges(ClickEvent _)
         {
-            foreach (Option panel in _panels.Values)
+            foreach (OptionPanel panel in _panels.Values)
             {
                 if(!panel.HasChanged()) continue;
                 
