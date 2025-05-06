@@ -1,8 +1,9 @@
 using UnityEngine.UIElements;
+using System.Threading.Tasks;
 using UnityEngine.Localization;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Game.Scripts.UI.Options.Base;
+using Game.Scripts.Extension.Toolkit;
 using UnityEngine.Localization.Settings;
 
 namespace Game.Scripts.UI.Options
@@ -11,18 +12,20 @@ namespace Game.Scripts.UI.Options
     {
         public GeneralPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
-            InitializeCollection();
             InitLanguage();
         }
 
-        public override Task Save()
+        public override void Save()
         {
-            return Task.CompletedTask;
         }
 
         public override void Reset()
         {
         }
+
+        public override bool HasChanged() => true;
+
+        public override void Dispose() { }
 
         private void InitLanguage()
         {
@@ -35,7 +38,7 @@ namespace Game.Scripts.UI.Options
             foreach (Locale locale in locales)
                 language.choices.Add(locale.LocaleName);
             
-            SubscribeChangedCallback(language, ChangeLanguage);
+            //language.RegisterEvent<ChangeEvent<string>>(HandleCallback, _elementsCallbacks, ChangeLanguage);
         }
 
         private void ChangeLanguage()

@@ -28,24 +28,9 @@
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(393680510976)" />
                     </Bindings>
                 </engine:Button>
-                <engine:Button text="Button" name="colors" class="optionButton" style="margin-top: 32px;">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(396645883904)" />
-                    </Bindings>
-                </engine:Button>
-                <engine:Button text="Button" name="hotkeys" class="optionButton">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(898532106240)" />
-                    </Bindings>
-                </engine:Button>
-                <engine:Button text="Button" name="bug-report" class="optionButton" style="margin-top: 32px;">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(967515824128)" />
-                    </Bindings>
-                </engine:Button>
             </engine:VisualElement>
             <engine:VisualElement name="options-content" class="optionContent" style="height: 80%;">
-                <engine:VisualElement name="general-content" style="flex-direction: column;">
+                <engine:VisualElement name="general-content" class="hidden" style="flex-direction: column;">
                     <engine:VisualElement name="game-options" class="optionsContent" style="flex-grow: 1;">
                         <engine:Label text="Label" name="game-title" class="contentOptionTitle">
                             <Bindings>
@@ -147,13 +132,56 @@
                     </engine:VisualElement>
                 </engine:VisualElement>
                 <engine:VisualElement name="audio-content" class="hidden" style="flex-direction: column;">
-                    <engine:VisualElement name="audio-options" class="optionsContent" style="flex-grow: 1;">
+                    <engine:VisualElement name="audio-options" style="flex-grow: 1;">
                         <engine:Label text="Label" name="audio-title" class="contentOptionTitle">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(4524980413542400)" />
                             </Bindings>
                         </engine:Label>
-                        <engine:VisualElement name="audio-options-container" class="optionsContainer" />
+                        <engine:VisualElement name="audio-options-container" style="padding-left: 20px; height: 584px; align-items: flex-start; justify-content: space-evenly; width: 400px;">
+                            <engine:VisualElement name="master-volume-block" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(7190295660343296)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="master-volume-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="master-volume-slider" />
+                            </engine:VisualElement>
+                            <engine:VisualElement name="music-volume-block" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(7190580453584896)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="music-volume-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="music-volume-slider" />
+                            </engine:VisualElement>
+                            <engine:VisualElement name="effects-volume-block" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(7190473016487936)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="effects-volume-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="effects-volume-slider" />
+                            </engine:VisualElement>
+                            <engine:VisualElement name="interface-volume-block" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(7190726687993856)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="interface-volume-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="interface-volume-slider" />
+                            </engine:VisualElement>
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:VisualElement>
+                <engine:VisualElement name="controls-content" style="flex-direction: column;">
+                    <engine:VisualElement name="controls-options">
+                        <engine:ScrollView name="controls-view" class="controlsView" />
+                        <engine:Label text="Выберите кнопку для замены" name="controls-navigation-label" style="height: 52px; width: 964px; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); font-size: 30px; -unity-text-align: lower-left; margin-left: 10px;" />
                     </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>

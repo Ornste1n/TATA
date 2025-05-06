@@ -36,8 +36,12 @@ namespace Game.Scripts.Data.Saver
             {
                 content = await stream.ReadToEndAsync();
             }
+            
+            TM data = JsonConvert.DeserializeObject<TM>(content, _jsonSettings);
 
-            return JsonConvert.DeserializeObject<TM>(content, _jsonSettings);
+            data.Validate();
+            
+            return data;
         }
     }
 }

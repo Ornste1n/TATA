@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Game.Scripts.Settings;
 using UnityEngine.UIElements;
 using System.Threading.Tasks;
 using UnityEngine.Localization;
@@ -8,6 +7,8 @@ using System.Collections.Generic;
 using Game.Scripts.UI.Options.Base;
 using UnityEngine.Localization.Tables;
 using AYellowpaper.SerializedCollections;
+using Game.Scripts.Options;
+using UnityEngine.InputSystem;
 
 namespace Game.Scripts.UI.Options
 {
@@ -15,6 +16,8 @@ namespace Game.Scripts.UI.Options
     {
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private LocalizedStringTable _optionTable;
+        [Space] 
+        [SerializeField] private InputActionAsset _inputAction;
         [Space]
         [SerializedDictionary("Screen Mode", "Localization Name")]
         public SerializedDictionary<FullScreenMode, TableEntryReference> _screenModesNames;
@@ -51,7 +54,7 @@ namespace Game.Scripts.UI.Options
         public Dictionary<string, FullScreenMode> ScreenModeLocalize { get; private set; }
         #endregion
 
-        private void Awake()
+        private void Start()
         {
             Initialize();
         }
@@ -79,6 +82,7 @@ namespace Game.Scripts.UI.Options
             RegisterPanel(_generalOptionPanel);
             RegisterPanel(new GraphicsPanel(this, "graphics-content", "graphics"));
             RegisterPanel(new AudioPanel(this, "audio-content", "audio"));
+            RegisterPanel(new ControlsPanel(this, "controls-content", "controls"));
             
             _generalOptionPanel.Button.AddToClassList(ActiveStyle);
             _current = _generalOptionPanel;
@@ -136,7 +140,7 @@ namespace Game.Scripts.UI.Options
             CustomLocalLabel = _options.GetEntry(_customQualityReference.Key)?.GetLocalizedString();
         }
 
-        private void SaveChanges(ClickEvent _)
+        private async void SaveChanges(ClickEvent _)
         {
             foreach (OptionPanel panel in _panels.Values)
             {
@@ -144,6 +148,8 @@ namespace Game.Scripts.UI.Options
                 
                 panel.Save();
             }
+
+            await OptionsManager.SaveAll();
         }
 
         private void ResetPanel(ClickEvent _)

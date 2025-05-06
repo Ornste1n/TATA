@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using Game.Scripts.Settings;
-using System.Threading.Tasks;
+using Game.Scripts.Options;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 using System.Collections.Generic;
 using Game.Scripts.UI.Options.Base;
-using JetBrains.Annotations;
+using Game.Scripts.Extension.Toolkit;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Game.Scripts.UI.Options
 {
@@ -37,13 +37,15 @@ namespace Game.Scripts.UI.Options
         #endregion
 
         private bool _isCustomOptions;
+        
         private readonly List<(Quality Value, Action<Quality>)> _changedGraphics = new(4);
-        private readonly Dictionary<IEventHandler, Action<Quality>> _graphicsCallback = new (8);
+        private readonly Dictionary<IEventHandler, Action<Quality>> _graphicsCallback = new(8);
 
+        private readonly HashSet<Action> _changedCallbacks = new(4);
+        private readonly Dictionary<IEventHandler, Action> _elementsCallbacks = new(4);
+        
         public GraphicsPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
-            InitializeCollection();
-
             Resolution();
             DisplayMode();
             Vsync();
@@ -51,45 +53,47 @@ namespace Game.Scripts.UI.Options
             InitGraphicsOption();
         }
 
-        public override async Task Save()
+        public override void Save()
         {
-            foreach (Action callback in ChangedCallbacks)
+            foreach (Action callback in _changedCallbacks)
                 callback?.Invoke();
 
             foreach (var (quality, action) in _changedGraphics)
                 action?.Invoke(quality);
             
-            await GraphicsOption.SaveGraphics();
-            
             _changedGraphics.Clear();
-            ChangedCallbacks.Clear();
+            _changedCallbacks.Clear();
         }
 
         public override void Reset() { }
 
-        public override bool HasChanged() => ChangedCallbacks?.Count != 0 || _changedGraphics.Count != 0;
-        
+        public override bool HasChanged() => _changedCallbacks?.Count != 0 || _changedGraphics.Count != 0;
+
         private void InitGraphicsOption()
         {
             List<string> qualityLevels = OptionsWindow.QualityLocalize.Keys.ToList();
-
-            RegisterGraphics(ref _models, "models", qualityLevels, GraphicsQuality.Models, GraphicsOption.UpdateModels);
-            RegisterGraphics(ref _shaders, "shaders", qualityLevels, GraphicsQuality.Shaders, GraphicsOption.UpdateShaders);
-            RegisterGraphics(ref _shadows, "shadows", qualityLevels, GraphicsQuality.Shadows, GraphicsOption.UpdateShadows);
-            RegisterGraphics(ref _terrain, "terrain", qualityLevels, GraphicsQuality.Terrain, GraphicsOption.UpdateTerrain);
-            RegisterGraphics(ref _physics, "physics", qualityLevels, GraphicsQuality.Physics, GraphicsOption.UpdatePhysics);
-            RegisterGraphics(ref _textures, "textures", qualityLevels, GraphicsQuality.Textures, GraphicsOption.UpdateTexture);
-            RegisterGraphics(ref _lightning, "lightning", qualityLevels, GraphicsQuality.Lightning, GraphicsOption.UpdateLightning);
-            RegisterGraphics(ref _postProcessing, "post-processing", qualityLevels, GraphicsQuality.PostProcessing, GraphicsOption.UpdatePostprocessing);
-
+            
+            RegisterGraphics(ref _models, "models", qualityLevels, GraphicsQuality.Models, OptionsManager.Graphics.UpdateModels);
+            RegisterGraphics(ref _shaders, "shaders", qualityLevels, GraphicsQuality.Shaders, OptionsManager.Graphics.UpdateShaders);
+            RegisterGraphics(ref _shadows, "shadows", qualityLevels, GraphicsQuality.Shadows, OptionsManager.Graphics.UpdateShadows);
+            RegisterGraphics(ref _terrain, "terrain", qualityLevels, GraphicsQuality.Terrain, OptionsManager.Graphics.UpdateTerrain);
+            RegisterGraphics(ref _physics, "physics", qualityLevels, GraphicsQuality.Physics, OptionsManager.Graphics.UpdatePhysics);
+            RegisterGraphics(ref _textures, "textures", qualityLevels, GraphicsQuality.Textures, OptionsManager.Graphics.UpdateTexture);
+            RegisterGraphics(ref _lightning, "lightning", qualityLevels, GraphicsQuality.Lightning, OptionsManager.Graphics.UpdateLightning);
+            RegisterGraphics(ref _postProcessing, "post-processing", qualityLevels, GraphicsQuality.PostProcessing, OptionsManager.Graphics.UpdatePostprocessing);
+            
             _graphicsQuality = OptionsWindow.Root.Q<DropdownField>("graphics-quality");
-            _graphicsQuality.RegisterCallback<ChangeEvent<string>>(ChangeGraphicsQuality);
+
             _graphicsQuality.choices = qualityLevels;
+            _isCustomOptions = !OptionsManager.Graphics.HasOneQualityLevel();
+            _graphicsQuality.value = !_isCustomOptions ? _models.value : OptionsWindow.CustomLocalLabel;
+            
+            _graphicsQuality.RegisterCallback<ChangeEvent<string>>(ChangeGraphicsQuality);
         }
         
         private void RegisterGraphics
         (
-            [CanBeNull] ref DropdownField field, 
+            [AllowNull] ref DropdownField field, 
             string name, List<string> choices,
             GraphicsQuality graphic, 
             Action<Quality> graphicsMethod
@@ -100,7 +104,7 @@ namespace Game.Scripts.UI.Options
             if (field == null) throw new ArgumentException("Field is null");
             
             field.choices = choices;
-            field.value = field.choices[(int)GraphicsOption.GetValue(graphic)];
+            field.value = field.choices[(int)OptionsManager.Graphics.GetValue(graphic)];
             
             field.RegisterValueChangedCallback(CheckCurrentGraphicsPreset);
             _graphicsCallback.Add(field, graphicsMethod);
@@ -137,12 +141,18 @@ namespace Game.Scripts.UI.Options
 
             SetValidRates(current.width, current.height);
 
-            SubscribeChangedCallback(_resolutionField, SetResolution);
-            SubscribeChangedCallback(_refreshRateField, SetResolution);
-
+            _resolutionField.RegisterEvent<ChangeEvent<string>>(HandleCallback, _elementsCallbacks, SetResolution);
+            _refreshRateField.RegisterEvent<ChangeEvent<string>>(HandleCallback, _elementsCallbacks, SetResolution);
+            
             _resolutionField.RegisterCallback<ChangeEvent<string>>(UpdateRefreshRates);
         }
-
+        
+        private void HandleCallback(EventBase eventBase)
+        {
+            Action callback = _elementsCallbacks[eventBase.currentTarget];
+            _changedCallbacks.Add(callback);
+        }
+        
         private void UpdateRefreshRates(ChangeEvent<string> changed)
         {
             (int Width, int Height) resolution = GetResolution(changed.newValue);
@@ -157,19 +167,17 @@ namespace Game.Scripts.UI.Options
             _screenModeField.value = OptionsWindow.ScreenModeLocalize.First(x => x.Value == Screen.fullScreenMode).Key;
 
             foreach (string localString in OptionsWindow.ScreenModeLocalize.Keys)
-            {
                 _screenModeField.choices.Add(localString);
-            }
 
-            SubscribeChangedCallback(_screenModeField, SetResolution);
+            _screenModeField.RegisterEvent<ChangeEvent<string>>(HandleCallback, _elementsCallbacks, SetResolution);
         }
 
         private void Vsync()
         {
             _vsync = OptionsWindow.Root.Q<Toggle>("vsync");
-            _vsync.value = false;
+            _vsync.value = QualitySettings.vSyncCount != 0;
 
-            SubscribeCallback(_vsync, SetVsync);
+            _vsync.RegisterEvent<ClickEvent>(HandleCallback, _elementsCallbacks, SetVsync);
         }
 
         private void SetValidRates(int width, int height)
@@ -202,7 +210,7 @@ namespace Game.Scripts.UI.Options
         {
             _refreshRateField.SetEnabled(!_vsync.value);
             _refreshRateField.value = $"{Screen.currentResolution.refreshRateRatio.value:F0}Hz";
-            GraphicsOption.UpdateVsync(_vsync.value);
+            OptionsManager.Graphics.UpdateVsync(_vsync.value);
         }
 
         private void SetResolution()
@@ -222,7 +230,7 @@ namespace Game.Scripts.UI.Options
                 i++;
             }
 
-            GraphicsOption.UpdateResolution(res.Width, res.Height, value, mode);
+            OptionsManager.Graphics.UpdateResolution(res.Width, res.Height, value, mode);
         }
 
         private void ChangeGraphicsQuality(ChangeEvent<string> evt)
@@ -328,6 +336,11 @@ namespace Game.Scripts.UI.Options
             }
 
             return (startIndex, lastIndex);
+        }
+        
+        public override void Dispose()
+        {
+            
         }
     }
 }

@@ -1,0 +1,60 @@
+{
+    "name": "Hotkeys",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "c8f01a8b-a740-4560-a0fb-2a2a5f497f24",
+            "actions": [
+                {
+                    "name": "Left Button",
+                    "type": "Button",
+                    "id": "fcca44b1-ce09-492d-ade5-31d01edc2f64",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right Button",
+                    "type": "Button",
+                    "id": "4df5b146-9e63-4ec4-b2d9-038f82495d7c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ed170446-0831-4aa2-bf2b-fb210abd9070",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "067a9222-8c37-4e18-9d20-ab109bdda3ee",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": []
+        }
+    ]
+}

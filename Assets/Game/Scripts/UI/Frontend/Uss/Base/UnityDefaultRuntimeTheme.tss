@@ -3,6 +3,8 @@
 @import url("/Assets/Game/Scripts/UI/Frontend/Uss/OptionWindowStyle.uss");
 @import url("/Assets/Game/Scripts/UI/Frontend/Uss/MainMenuStyle.uss");
 @import url("Buttons.uss");
+@import url("Sliders.uss");
+
 
 
 

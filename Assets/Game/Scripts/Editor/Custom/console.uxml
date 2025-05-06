@@ -10,8 +10,8 @@
             <engine:Button text="Открыть" name="logs-open" class="console-button" />
         </engine:VisualElement>
         <engine:VisualElement name="file-graphics" class="fileBlock">
-            <engine:Label text="Графика" name="graphics" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />
-            <engine:Button text="Открыть" name="graphics-open" class="console-button" />
+            <engine:Label text="Конфиг" name="graphics" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />
+            <engine:Button text="Открыть" name="config-open" class="console-button" />
         </engine:VisualElement>
         <engine:VisualElement name="error-error" class="fileBlock">
             <engine:Label text="Ошибки" name="errors" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); color: rgb(255, 255, 255); font-size: 15px;" />

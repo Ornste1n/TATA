@@ -168,6 +168,22 @@ MonoBehaviour:
     m_Localized: Audio
     m_Metadata:
       m_Items: []
+  - m_Id: 7190295660343296
+    m_Localized: 'Master Volume:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7190473016487936
+    m_Localized: 'Effects:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7190580453584896
+    m_Localized: 'Music:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7190726687993856
+    m_Localized: 'Interface:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -18,5 +18,28 @@ namespace Game.Scripts.Extension.Toolkit
             element.RegisterCallback(callback);
             handlers.TryAdd(element, action);
         }
+        
+        public static void RegisterEvent<T>
+        (
+            this VisualElement element, 
+            EventCallback<T> callback
+        )
+            where T : EventBase<T>, new()
+        {
+            element.RegisterCallback(callback);
+        }
+        
+        public static void SubscribeCallback<T>
+        (
+            this VisualElement element,  
+            EventCallback<T> callback ,
+            Dictionary<IEventHandler, Action> callbacks,
+            Action action
+        )
+            where T : EventBase<T>, new()
+        {
+            element.RegisterCallback(callback);
+            callbacks.Add(element, action);
+        }
     }
 }
