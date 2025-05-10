@@ -184,6 +184,18 @@ MonoBehaviour:
     m_Localized: 'Interface:'
     m_Metadata:
       m_Items: []
+  - m_Id: 8188715481051136
+    m_Localized: "\rSelect a slot to replace"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8188913603194880
+    m_Localized: Confirm your choice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8189072064000000
+    m_Localized: Input new bind (ECS to cancel)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

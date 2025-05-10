@@ -1,5 +1,4 @@
 using Game.Scripts.Inputs;
-using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Game.Scripts.UI.Options.Base;
@@ -8,12 +7,23 @@ namespace Game.Scripts.UI.Options
 {
     public class ControlsPanel : OptionPanel
     {
+        private Label _navigationLabel;
+        private ScrollView _scrollView;
         private VisualElement _currentSelected;
+
+        private bool _hasChanged = false;
         
         public ControlsPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
+            InitializeControlsView();
+        }
+
+        private void InitializeControlsView()
+        {
             InputActionAsset action = InputManager.Instance.Controls.asset;
-            ScrollView scrollView = window.Root.Q<ScrollView>("controls-view");
+            ScrollView scrollView = OptionsWindow.Root.Q<ScrollView>("controls-view");
+
+            _scrollView = scrollView;
             
             foreach (InputActionMap map in action.actionMaps)
             {
@@ -52,8 +62,11 @@ namespace Game.Scripts.UI.Options
                     }
                 }
             }
+            
+            _navigationLabel = OptionsWindow.Root.Q<Label>("controls-navigation-label");
+            _navigationLabel.text = OptionsWindow.SelectInputSlot;
         }
-
+        
         private void SelectAction(ClickEvent clickEvent)
         {
             VisualElement element = (VisualElement)clickEvent.currentTarget;
@@ -69,18 +82,23 @@ namespace Game.Scripts.UI.Options
 
                 _currentSelected.RemoveFromClassList("inputSelected");
             }
-                
+            
             _currentSelected = element;
             _currentSelected.AddToClassList("inputSelected");
+
+            string newLabel = OptionsWindow.ConfirmInputSlot;
+            
+            if(!ReferenceEquals(_navigationLabel.text, newLabel))
+                _navigationLabel.text = newLabel;
         }
 
         private void Rebinding()
         {
-            Debug.Log("Rebinding");
-            
             if (_currentSelected?.userData is not ActionBindingInfo info)
                 return;
 
+            _navigationLabel.text = OptionsWindow.InputNewBind;
+            
             InputAction action = info.Action;
             int bindingIndex = info.BindingIndex;
             Label keyLabel = info.KeyLabel;
@@ -101,6 +119,13 @@ namespace Game.Scripts.UI.Options
                     string newDisplay = InputControlPath.ToHumanReadableString(newPath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
                     keyLabel.text = $"[<color=#00ffff>{newDisplay}</color>]";
+                    
+                    _navigationLabel.text = OptionsWindow.SelectInputSlot;
+                    
+                    _currentSelected.RemoveFromClassList("inputSelected");
+                    _currentSelected = null;
+
+                    if (!_hasChanged) _hasChanged = true;
                 })
                 .OnCancel(op =>
                 {
@@ -110,27 +135,27 @@ namespace Game.Scripts.UI.Options
                     string currentPath = action.bindings[bindingIndex].effectivePath;
                     string display = InputControlPath.ToHumanReadableString(currentPath, InputControlPath.HumanReadableStringOptions.OmitDevice);
                     keyLabel.text = $"[<color=#00ffff>{display}</color>]";
+                    
+                    _navigationLabel.text = OptionsWindow.SelectInputSlot;
+                    
+                    _currentSelected.RemoveFromClassList("inputSelected");
+                    _currentSelected = null;
                 });
 
             rebind.Start();
         }
         
-        public override void Save()
-        {
-        }
+        public override void Save() => InputManager.Instance.SaveControlOverrides();
 
-        public override void Reset()
-        {
-        }
+        public override void Reset() => InputManager.Instance.ResetOverrides();
 
         public override void Dispose()
         {
+            foreach (VisualElement container in _scrollView.Children())
+                container.UnregisterCallback<ClickEvent>(SelectAction);
         }
 
-        public override bool HasChanged()
-        {
-            return true;
-        }
+        public override bool HasChanged() => _hasChanged;
     }
 
     public class ActionBindingInfo

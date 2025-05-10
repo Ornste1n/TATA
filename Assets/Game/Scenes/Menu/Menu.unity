@@ -425,6 +425,94 @@ MonoBehaviour:
   RotationSpeed: 0.25
   Axis: {x: 0.20475286, y: 0.9781476, z: -0.036103465}
   Sun: {fileID: 1858015878}
+--- !u!1 &542122002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542122004}
+  - component: {fileID: 542122003}
+  m_Layer: 0
+  m_Name: Options Window
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &542122003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542122002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9547394447dfe14cb3fa52faeca7e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiDocument: {fileID: 1796450528}
+  _optionTable:
+    m_TableReference:
+      m_TableCollectionName: GUID:2e4624807878fbc49919a68454c34fe9
+  _screenModesNames:
+    _serializedList:
+    - Key: 1
+      Value:
+        m_KeyId: 0
+        m_Key: options.Fullscreen
+    - Key: 2
+      Value:
+        m_KeyId: 0
+        m_Key: options.Borderless
+    - Key: 3
+      Value:
+        m_KeyId: 0
+        m_Key: options.Windowed
+  _qualityLevel:
+    _serializedList:
+    - Key: 0
+      Value:
+        m_KeyId: 0
+        m_Key: options.Low
+    - Key: 1
+      Value:
+        m_KeyId: 0
+        m_Key: options.Medium
+    - Key: 2
+      Value:
+        m_KeyId: 0
+        m_Key: options.High
+  _customQualityReference:
+    m_KeyId: 0
+    m_Key: optoins.Custom
+  _selectInputSlot:
+    m_KeyId: 0
+    m_Key: options.SelectInputLabel
+  _confirmInputSlot:
+    m_KeyId: 0
+    m_Key: options.ConfirmChoise
+  _inputNewBind:
+    m_KeyId: 0
+    m_Key: options.InputBind
+--- !u!4 &542122004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542122002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 129.05463, y: 40.874516, z: 115.04222}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &614242655
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,37 +587,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &637682351
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 637682352}
-  m_Layer: 0
-  m_Name: ---Debug---
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &637682352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637682351}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 259.87668, y: 627.44006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -947,7 +1004,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1796450529}
   - component: {fileID: 1796450528}
-  - component: {fileID: 1796450531}
   - component: {fileID: 1796450530}
   m_Layer: 0
   m_Name: UI
@@ -1003,55 +1059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiDocument: {fileID: 1796450528}
-  _optionsWindow: {fileID: 1796450531}
---- !u!114 &1796450531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1796450527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9547394447dfe14cb3fa52faeca7e90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uiDocument: {fileID: 1796450528}
-  _optionTable:
-    m_TableReference:
-      m_TableCollectionName: GUID:2e4624807878fbc49919a68454c34fe9
-  _inputAction: {fileID: -944628639613478452, guid: da5869aba8ffe6643886a94a5c6a0c25, type: 3}
-  _screenModesNames:
-    _serializedList:
-    - Key: 1
-      Value:
-        m_KeyId: 0
-        m_Key: options.Fullscreen
-    - Key: 2
-      Value:
-        m_KeyId: 0
-        m_Key: options.Borderless
-    - Key: 3
-      Value:
-        m_KeyId: 0
-        m_Key: options.Windowed
-  _qualityLevel:
-    _serializedList:
-    - Key: 0
-      Value:
-        m_KeyId: 0
-        m_Key: options.Low
-    - Key: 1
-      Value:
-        m_KeyId: 0
-        m_Key: options.Medium
-    - Key: 2
-      Value:
-        m_KeyId: 0
-        m_Key: options.High
-  _customQualityReference:
-    m_KeyId: 0
-    m_Key: optoins.Custom
+  _optionsWindow: {fileID: 542122003}
 --- !u!1 &1858015877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,13 +1598,13 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1796450529}
   - {fileID: 1550900079}
-  - {fileID: 614242658}
   - {fileID: 764178570}
-  - {fileID: 1858015879}
   - {fileID: 510780377}
-  - {fileID: 1459583433}
-  - {fileID: 637682352}
+  - {fileID: 1858015879}
   - {fileID: 1217654306}
   - {fileID: 2142750573}
+  - {fileID: 1796450529}
+  - {fileID: 542122004}
+  - {fileID: 1459583433}
+  - {fileID: 614242658}

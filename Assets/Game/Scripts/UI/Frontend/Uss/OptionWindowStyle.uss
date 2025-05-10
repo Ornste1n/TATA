@@ -32,18 +32,6 @@
     padding-top: 20px;
 }
 
-.optionDropdown {
-    color: rgb(255, 255, 255);
-    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
-    font-size: 24px;
-    -unity-text-align: middle-center;
-    -unity-font-style: normal;
-    white-space: pre;
-    text-overflow: clip;
-    width: 485px;
-    height: 48px;
-}
-
 .optionsContainer {
     padding-top: 10px;
     flex-direction: row;
@@ -56,7 +44,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     unity-text-overflow: shrink;
-    color: rgb(204, 204, 204);
+    color: rgb(255, 255, 255);
     font-size: 24px;
     -unity-text-align: middle-right;
     -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
@@ -71,7 +59,7 @@
     color: rgb(255, 255, 255);
 }
 
-DropdownField:hover .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+MyDropdownField:hover .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
     background-color: rgba(255, 255, 255, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
@@ -81,7 +69,7 @@ DropdownField:hover .unity-base-field__input.unity-base-popup-field__input.unity
     -unity-background-image-tint-color: rgb(116, 1, 198);
 }
 
-DropdownField:active:enabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+MyDropdownField:active:enabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
     background-color: rgba(255, 255, 255, 0);
     background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
     -unity-background-image-tint-color: rgb(116, 1, 198);
@@ -91,7 +79,7 @@ DropdownField:active:enabled .unity-base-field__input.unity-base-popup-field__in
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
-DropdownField:focus:enabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+MyDropdownField:focus:enabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
     background-color: rgba(255, 255, 255, 0);
     background-image: url("project://database/Assets/Game/Source/UI/SF%20UI/SF%20Generic.psd?fileID=21300000&guid=1f1d5baae1d26404a8a639a07e5c7766&type=3#SF Generic_0");
     -unity-background-image-tint-color: rgb(116, 1, 198);
@@ -105,7 +93,7 @@ DropdownField:focus:enabled .unity-base-field__input.unity-base-popup-field__inp
     background-color: rgb(97, 1, 166);
 }
 
-DropdownField .unity-base-field__input {
+MyDropdownField .unity-base-field__input {
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -114,6 +102,14 @@ DropdownField .unity-base-field__input {
     -unity-background-image-tint-color: rgb(97, 1, 166);
     -unity-slice-scale: 0.7px;
     background-color: rgba(0, 0, 0, 0);
+    width: 250px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    font-size: 22px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
 }
 
 .unity-base-popup-field__arrow {
@@ -315,11 +311,11 @@ DropdownField .unity-base-field__input {
     display: none;
 }
 
-DropdownField:disabled {
+MyDropdownField:disabled {
     opacity: 0.6;
 }
 
-DropdownField:disabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
+MyDropdownField:disabled .unity-base-field__input.unity-base-popup-field__input.unity-popup-field__input {
     -unity-background-image-tint-color: rgb(60, 0, 103);
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
@@ -328,11 +324,11 @@ DropdownField:disabled .unity-base-field__input.unity-base-popup-field__input.un
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
-DropdownField:disabled .unity-base-field__label {
+MyDropdownField:disabled .unity-base-field__label {
     color: rgba(255, 255, 255, 0.78);
 }
 
-DropdownField:disabled .unity-base-popup-field__arrow {
+MyDropdownField:disabled .unity-base-popup-field__arrow {
     -unity-background-image-tint-color: rgb(99, 3, 145);
 }
 
@@ -432,4 +428,30 @@ DropdownField:disabled .unity-base-popup-field__arrow {
 
 .inputSelected:hover:enabled {
     background-color: rgb(74, 19, 125);
+}
+
+.dropdownContainer {
+    flex-direction: row;
+    width: 485px;
+    height: 48px;
+    justify-content: flex-end;
+}
+
+.optionDropdown {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    font-size: 24px;
+    -unity-text-align: middle-center;
+    -unity-font-style: normal;
+    white-space: pre;
+    text-overflow: clip;
+    width: 485px;
+    height: 48px;
+}
+
+.dropdownLabel {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&guid=c9aa17607b988c240b8bfbc1edbf272d&type=3#Philosopher-Regular");
+    font-size: 24px;
+    -unity-text-align: middle-left;
 }

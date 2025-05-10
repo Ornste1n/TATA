@@ -46,6 +46,8 @@ namespace Game.Scripts.UI.Options
         
         public GraphicsPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
+            Debug.Log("Constructor");
+            
             Resolution();
             DisplayMode();
             Vsync();
@@ -106,12 +108,16 @@ namespace Game.Scripts.UI.Options
             field.choices = choices;
             field.value = field.choices[(int)OptionsManager.Graphics.GetValue(graphic)];
             
+            Debug.Log($"Register Graphics [{name}]: {graphic} | {field.value}");
+
             field.RegisterValueChangedCallback(CheckCurrentGraphicsPreset);
             _graphicsCallback.Add(field, graphicsMethod);
         }
 
         private void CheckCurrentGraphicsPreset(ChangeEvent<string> evt)
         {
+            Debug.Log($"CheckCurrentGraphicsPreset: new -> {evt.newValue} | previous -> {evt.previousValue}");
+            
             if (!_isCustomOptions && evt.newValue != _graphicsQuality.value)
             {
                 _isCustomOptions = true;
@@ -124,6 +130,8 @@ namespace Game.Scripts.UI.Options
 
         private void Resolution()
         {
+            Debug.Log("Resolution");
+            
             _resolutionField = OptionsWindow.Root.Q<DropdownField>("resolution");
             _refreshRateField = OptionsWindow.Root.Q<DropdownField>("refresh-rate");
 
@@ -155,6 +163,8 @@ namespace Game.Scripts.UI.Options
         
         private void UpdateRefreshRates(ChangeEvent<string> changed)
         {
+            Debug.Log($"Update Refresh Rates: {changed.newValue}");
+            
             (int Width, int Height) resolution = GetResolution(changed.newValue);
             SetValidRates(resolution.Width, resolution.Height);
         }
@@ -184,6 +194,8 @@ namespace Game.Scripts.UI.Options
         {
             _refreshRateField.choices.Clear();
 
+            Debug.Log($"Set Valid Rates: {width}:{height}");
+            
             (int left, int right) = BinarySearchRefreshRates(width, height);
 
             if (left == -1) left = right;
@@ -278,7 +290,7 @@ namespace Game.Scripts.UI.Options
             return (width, height);
         }
 
-        private (int left, int right) BinarySearchRefreshRates(int width, int height)
+        private static (int left, int right) BinarySearchRefreshRates(int width, int height)
         {
             int lastIndex = -1;
             int startIndex = -1;

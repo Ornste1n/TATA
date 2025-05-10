@@ -183,6 +183,18 @@ MonoBehaviour:
     m_Key: options.Interface
     m_Metadata:
       m_Items: []
+  - m_Id: 8188715481051136
+    m_Key: options.SelectInputLabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8188913603194880
+    m_Key: options.ConfirmChoise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8189072064000000
+    m_Key: options.InputBind
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

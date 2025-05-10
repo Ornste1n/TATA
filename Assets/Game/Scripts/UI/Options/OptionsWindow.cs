@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Game.Scripts.Options;
 using UnityEngine.UIElements;
 using System.Threading.Tasks;
 using UnityEngine.Localization;
@@ -7,25 +8,28 @@ using System.Collections.Generic;
 using Game.Scripts.UI.Options.Base;
 using UnityEngine.Localization.Tables;
 using AYellowpaper.SerializedCollections;
-using Game.Scripts.Options;
-using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
 
 namespace Game.Scripts.UI.Options
 {
     public class OptionsWindow : MonoBehaviour
     {
         [SerializeField] private UIDocument _uiDocument;
+        
+        [Header("Localization")]
         [SerializeField] private LocalizedStringTable _optionTable;
-        [Space] 
-        [SerializeField] private InputActionAsset _inputAction;
         [Space]
         [SerializedDictionary("Screen Mode", "Localization Name")]
-        public SerializedDictionary<FullScreenMode, TableEntryReference> _screenModesNames;
+        [SerializeField] private SerializedDictionary<FullScreenMode, TableEntryReference> _screenModesNames;
         [Space]
         [SerializedDictionary("Quality", "Localization Name")]
-        public SerializedDictionary<Quality, TableEntryReference> _qualityLevel;
+        [SerializeField] private SerializedDictionary<Quality, TableEntryReference> _qualityLevel;
         [Space] 
         [SerializeField] private TableEntryReference _customQualityReference;
+        [Space] 
+        [SerializeField] private TableEntryReference _selectInputSlot;
+        [SerializeField] private TableEntryReference _confirmInputSlot;
+        [SerializeField] private TableEntryReference _inputNewBind;
 
         private Button _backButton;
         private Button _applyButton;
@@ -50,6 +54,9 @@ namespace Game.Scripts.UI.Options
 
         #region Localize
         public string CustomLocalLabel { get; private set; }
+        public string SelectInputSlot { get; private set; }
+        public string ConfirmInputSlot { get; private set; }
+        public string InputNewBind { get; private set; }
         public Dictionary<string, Quality> QualityLocalize { get; private set; }
         public Dictionary<string, FullScreenMode> ScreenModeLocalize { get; private set; }
         #endregion
@@ -68,7 +75,7 @@ namespace Game.Scripts.UI.Options
         private async void Initialize()
         {
             m_Panel = Root.Q<VisualElement>("OptionsTemplate");
-                
+            
             await LoadLocalizeTable();
             
             InitNavigation();
@@ -104,40 +111,45 @@ namespace Game.Scripts.UI.Options
             _current.Panel.RemoveFromClassList(Hidden);
             _current.Button.AddToClassList(ActiveStyle);
         }
-        
+
         private async Task LoadLocalizeTable()
         {
             _options = await _optionTable.GetTableAsync().Task;
 
             ScreenModeLocalize = new Dictionary<string, FullScreenMode>(3);
-            
+
             foreach (var (fullScreenMode, reference) in _screenModesNames)
             {
                 string local = _options.GetEntry(reference.Key)?.GetLocalizedString();
-                
+
                 if (local == null) continue;
-                
+
                 ScreenModeLocalize.Add(local, fullScreenMode);
             }
-            
+
             _screenModesNames.Clear();
             _screenModesNames = null;
 
             QualityLocalize = new Dictionary<string, Quality>(3);
-            
+
             foreach (var (quality, reference) in _qualityLevel)
             {
                 string local = _options.GetEntry(reference.Key)?.GetLocalizedString();
-                
+
                 if (local == null) continue;
-                
+
                 QualityLocalize.Add(local, quality);
             }
-            
+
             _qualityLevel.Clear();
             _qualityLevel = null;
-            
+
             CustomLocalLabel = _options.GetEntry(_customQualityReference.Key)?.GetLocalizedString();
+            SelectInputSlot = _options.GetEntry(_selectInputSlot.Key)?.GetLocalizedString();
+            ConfirmInputSlot = _options.GetEntry(_confirmInputSlot.Key)?.GetLocalizedString();
+            InputNewBind = _options.GetEntry(_inputNewBind.Key)?.GetLocalizedString();
+            
+            Debug.Log("Localize all");
         }
 
         private async void SaveChanges(ClickEvent _)

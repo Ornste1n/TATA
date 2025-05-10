@@ -1,4 +1,5 @@
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Game.Scripts.Data;
 using UnityEngine.InputSystem;
@@ -54,6 +55,11 @@ namespace Game.Scripts.Inputs
             Debug.Log("Control bindings saved to JSON");
         }
 
+        public void ResetOverrides()
+        {
+            Controls.RemoveAllBindingOverrides();
+        }
+        
         private void OnDestroy()
         {
             if (Controls != null)

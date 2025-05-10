@@ -2,11 +2,11 @@
     "name": "Hotkeys",
     "maps": [
         {
-            "name": "Player",
+            "name": "Units",
             "id": "c8f01a8b-a740-4560-a0fb-2a2a5f497f24",
             "actions": [
                 {
-                    "name": "Left Button",
+                    "name": "Selection",
                     "type": "Button",
                     "id": "fcca44b1-ce09-492d-ade5-31d01edc2f64",
                     "expectedControlType": "",
@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Right Button",
+                    "name": "OrderToMove",
                     "type": "Button",
                     "id": "4df5b146-9e63-4ec4-b2d9-038f82495d7c",
                     "expectedControlType": "",
@@ -32,7 +32,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Left Button",
+                    "action": "Selection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -43,7 +43,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Right Button",
+                    "action": "OrderToMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

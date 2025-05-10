@@ -18,7 +18,7 @@
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(477260406784)" />
             </Bindings>
         </engine:Button>
-        <engine:Button text="Button" name="exit" class="menuNavigationButton" style="margin-top: 65px;">
+        <engine:Button text="Button" name="quit" class="menuNavigationButton" style="margin-top: 65px;">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(529127170048)" />
             </Bindings>

@@ -4,7 +4,6 @@ using Game.Scripts.Data.Saver;
 using System.Collections.Generic;
 using Game.Scripts.Options;
 using Newtonsoft.Json;
-using UnityEditor.Localization.Plugins.XLIFF.Common;
 
 namespace Game.Scripts.Data.Options
 {
