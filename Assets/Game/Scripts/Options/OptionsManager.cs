@@ -26,7 +26,7 @@ namespace Game.Scripts.Options
                 if (_model == null)
                     throw new NullReferenceException();
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
                 Debug.LogWarning("Option Exception: Model is invalid");
 

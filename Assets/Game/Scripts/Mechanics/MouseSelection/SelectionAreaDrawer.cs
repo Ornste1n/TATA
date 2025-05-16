@@ -3,6 +3,7 @@ using Unity.Entities;
 using Game.Scripts.Inputs;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
+using Game.Scripts.Extension.Meshes;
 
 namespace Game.Scripts.Mechanics.MouseSelection
 {
@@ -10,15 +11,15 @@ namespace Game.Scripts.Mechanics.MouseSelection
     {
         private readonly Mesh _mesh;
         private readonly Material _shaderMaterial;
+        private readonly PlayerInputSystem _inputSystem;
         private static readonly int QuadSize = Shader.PropertyToID("_QuadSize");
         
         private Vector2 _startMousePosition;
-        private PlayerInputSystem _inputSystem;
 
         public SelectionAreaDrawer(Material shaderMaterial)
         {
-            _mesh = CreateQuadMesh();
             _shaderMaterial = shaderMaterial;
+            _mesh = MeshUtility.CreateQuadMesh();
             _inputSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<PlayerInputSystem>();
             
             _inputSystem.OnMouseEndDrag += Stop;
@@ -63,44 +64,10 @@ namespace Game.Scripts.Mechanics.MouseSelection
         {
             RenderPipelineManager.endCameraRendering -= Draw;
         }
-
-        private Mesh CreateQuadMesh()
-        {
-            Mesh mesh = new Mesh();
-            
-            Vector3[] vertices =
-            {
-                new (0, 0 ,0),
-                new (0, 1 ,0),
-                new (1, 0 ,0),
-                new (1, 1 ,0),
-            };
-            
-            Vector2[] uv =
-            {
-                new (0, 0),
-                new (0, 1),
-                new (1, 0),
-                new (1, 1),
-            };
-
-            int[] triangles =
-            {
-                0, 1, 2,
-                2, 1, 3
-            };
-
-            mesh.vertices = vertices;
-            mesh.uv = uv;
-            mesh.triangles = triangles;
-
-            mesh.RecalculateBounds();
-
-            return mesh;
-        }
         
         public void Dispose()
         {
+            Stop();
             _inputSystem.OnMouseEndDrag -= Stop;
             _inputSystem.OnMouseBeginDrag -= Start;
         }
