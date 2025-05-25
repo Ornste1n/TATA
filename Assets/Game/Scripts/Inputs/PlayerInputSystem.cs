@@ -4,6 +4,8 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine.InputSystem;
 using Game.Scripts.Inputs.Components;
+using Game.Scripts.UI.Gameplay;
+using UnityEngine.UIElements;
 
 namespace Game.Scripts.Inputs
 {
@@ -14,6 +16,7 @@ namespace Game.Scripts.Inputs
         private EntityManager _entityManager;
 
         private Camera _mainCamera;
+        private UIDocument _mainDocument;
         
         #region Mouse
         
@@ -37,9 +40,17 @@ namespace Game.Scripts.Inputs
             
             _entityInput = _entityManager.CreateEntity();
             _entityManager.AddComponent<InputData>(_entityInput);
+            
+            RequireForUpdate<MainCanvasData>();
         }
-        
-        protected override void OnStartRunning() => _controls.Enable();
+
+        protected override void OnStartRunning()
+        {
+            _controls.Enable();
+
+            MainCanvasData data = SystemAPI.GetSingleton<MainCanvasData>();
+            _mainDocument = data.Document.Value;
+        }
 
         protected override void OnUpdate()
         {
@@ -71,7 +82,9 @@ namespace Game.Scripts.Inputs
 
             if (!_dragging)
             {
-                _entityManager.AddComponentData(_entityInput, new ClickMouseEvent(GetWorldPosition(currentMousePos)));
+                if(!IsPointerOverUI())
+                    _entityManager.AddComponentData(_entityInput, new ClickMouseEvent(GetWorldPosition(currentMousePos)));
+                
                 return;
             }
             
@@ -97,6 +110,17 @@ namespace Game.Scripts.Inputs
         
         protected override void OnStopRunning() => _controls.Disable();
 
+        private bool IsPointerOverUI()
+        {
+            Vector2 mousePosition = Mouse.current.position.value;
+            mousePosition.y = Screen.height - mousePosition.y;
+            
+            IPanel panel = _mainDocument.rootVisualElement.panel;
+            Vector2 screenPoint = RuntimePanelUtils.ScreenToPanel(panel, mousePosition);
+
+            return panel.Pick(screenPoint) != null;
+        }
+        
         private float3 GetWorldPosition(Vector3 position)
         {
             Ray ray = _mainCamera.ScreenPointToRay(position);

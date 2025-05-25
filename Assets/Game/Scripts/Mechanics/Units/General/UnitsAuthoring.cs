@@ -1,7 +1,6 @@
 using UnityEngine;
 using Unity.Entities;
 using Game.Scripts.Mechanics.Units.General.Components;
-using Game.Scripts.Mechanics.Units.Selection;
 
 namespace Game.Scripts.Mechanics.Units.General
 {
@@ -20,8 +19,6 @@ namespace Game.Scripts.Mechanics.Units.General
                     Health = authoring.m_Health,
                     MaxHealth = authoring.m_Health
                 });
-
-                AddComponent(entity, new UnitSelectionTag());
             }
         }
     }

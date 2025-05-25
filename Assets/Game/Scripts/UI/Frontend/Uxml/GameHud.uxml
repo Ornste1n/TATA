@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UnitsHud" src="project://database/Assets/Game/Scripts/UI/Frontend/Uxml/UnitsHud.uxml?fileID=9197481963319205126&amp;guid=c3be57956d8d9b941b1ce5a4ff5efa46&amp;type=3#UnitsHud" />
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/UnitsHudStyle.uss?fileID=7433441132597879392&amp;guid=9e5c953c7e7a7b7489c23ff84051b006&amp;type=3#UnitsHudStyle" />
+    <ui:Instance template="UnitsHud" name="units-template" style="align-self: center; position: absolute; bottom: 10px;" />
+</ui:UXML>

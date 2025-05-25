@@ -1,10 +1,11 @@
 using System;
+using Unity.Burst;
 using Unity.Physics;
-using Unity.Entities;
 using Unity.Collections;
 
 namespace Game.Scripts.Mechanics.Units.Selection
 {
+    [BurstCompile]
     public readonly struct OverlapCollector : ICollector<ColliderCastHit>, IDisposable
     {
         public NativeList<ColliderCastHit> Hits { get; }
@@ -18,6 +19,7 @@ namespace Game.Scripts.Mechanics.Units.Selection
             Hits = new NativeList<ColliderCastHit>(capacity, allocator);
         }
         
+        [BurstCompile]
         public bool AddHit(ColliderCastHit hit)
         {
             Hits.Add(hit);

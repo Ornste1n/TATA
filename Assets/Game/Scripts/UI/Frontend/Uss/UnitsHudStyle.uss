@@ -1,0 +1,160 @@
+:root {
+}
+
+.hidden {
+    display: none;
+}
+
+.unitsMainPanel {
+    background-color: rgb(20, 20, 20);
+    border-left-color: rgb(123, 1, 211);
+    border-right-color: rgb(123, 1, 211);
+    border-top-color: rgb(123, 1, 211);
+    border-bottom-color: rgb(123, 1, 211);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 120px;
+    padding-left: 160px;
+    align-self: center;
+    width: 1000px;
+    height: 150px;
+    min-width: 1000px;
+    max-width: 1000px;
+    min-height: 150px;
+}
+
+.units {
+    width: 45px;
+    height: 45px;
+    position: relative;
+    border-left-color: rgb(150, 5, 255);
+    border-right-color: rgb(150, 5, 255);
+    border-top-color: rgb(150, 5, 255);
+    border-bottom-color: rgb(150, 5, 255);
+    border-top-width: 1.2px;
+    border-right-width: 1.2px;
+    border-bottom-width: 1.2px;
+    border-left-width: 1.2px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    max-height: 45px;
+    max-width: 45px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+    background-image: url("project://database/Assets/Game/Source/UI/UI%20Elements/White/2x/home.png?fileID=21300000&guid=135427c69ca9fd14c9a77c60701078cc&type=3#home");
+    background-size: 80% 80%;
+}
+
+.unitInfoPanel {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-direction: row;
+}
+
+.unitsContainerPanel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.unitsSelected {
+    flex-direction: row;
+    position: relative;
+}
+
+.unitsPageList {
+    position: relative;
+    flex-wrap: wrap-reverse;
+    justify-content: flex-start;
+    margin-right: 15px;
+    height: 145px;
+}
+
+.unitsPage {
+    width: 46px;
+    height: 31px;
+    max-height: 47px;
+    border-top-width: 1.45px;
+    border-right-width: 1.45px;
+    border-bottom-width: 1.45px;
+    border-left-width: 1.45px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left-color: rgba(131, 13, 255, 0.63);
+    border-right-color: rgba(131, 13, 255, 0.63);
+    border-top-color: rgba(131, 13, 255, 0.63);
+    border-bottom-color: rgba(131, 13, 255, 0.63);
+    margin-bottom: 3px;
+    margin-top: 0.4px;
+    margin-left: 8px;
+}
+
+.unitsPageLabel {
+    color: rgb(223, 216, 226);
+    -unity-text-align: middle-right;
+    font-size: 20px;
+    -unity-font-definition: url("project://database/Assets/Plugins/Graphy%20-%20Ultimate%20Stats%20Monitor/Font/Roboto/Roboto-Regular.ttf?fileID=12800000&guid=76ed11d84beb10846a746b4259e26d39&type=3#Roboto-Regular");
+}
+
+.unitsPage:hover {
+    border-left-color: rgb(149, 0, 255);
+    border-right-color: rgb(149, 0, 255);
+    border-top-color: rgb(149, 0, 255);
+    border-bottom-color: rgb(149, 0, 255);
+}
+
+.unitsPageSelected {
+    border-left-color: rgb(187, 26, 251);
+    border-right-color: rgb(187, 26, 251);
+    border-top-color: rgb(187, 26, 251);
+    border-bottom-color: rgb(187, 26, 251);
+}
+
+.unitInfoIcon {
+    background-image: url("project://database/Assets/Game/Source/UI/UI%20Elements/White/2x/home.png?fileID=21300000&guid=135427c69ca9fd14c9a77c60701078cc&type=3#home");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    height: 80px;
+    width: 80px;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+.units:hover:enabled {
+    border-left-color: rgb(207, 90, 255);
+    border-right-color: rgb(207, 90, 255);
+    border-top-color: rgb(207, 90, 255);
+    border-bottom-color: rgb(207, 90, 255);
+}
+
+.unitsInfoAdd {
+    flex-grow: 1;
+    height: 120px;
+    top: -20px;
+    margin-left: 15px;
+}
+
+.unitsInfoMain {
+    width: 25%;
+}
+
+.unityInfoHealth {
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    font-size: 21px;
+}

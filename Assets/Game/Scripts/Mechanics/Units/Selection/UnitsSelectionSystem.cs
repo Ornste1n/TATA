@@ -13,14 +13,19 @@ using ConvexCollider = Unity.Physics.ConvexCollider;
 namespace Game.Scripts.Mechanics.Units.Selection
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(SelectionSystemGroup))]
     public partial struct UnitsSelectionSystem : ISystem
     {
+        private Entity _selectedEvent;
+        
         public void OnCreate(ref SystemState state)
         {
             EntityQueryBuilder builder = new EntityQueryBuilder(Allocator.Temp)
                 .WithAny<EndDragEvent, ClickMouseEvent>();
             
             EntityQuery query = state.GetEntityQuery(builder);
+
+            _selectedEvent = state.EntityManager.CreateEntity();
             
             state.RequireAnyForUpdate(query);
             state.RequireForUpdate<InputData>();
@@ -38,8 +43,8 @@ namespace Game.Scripts.Mechanics.Units.Selection
             
             NativeArray<Entity> unitsSelected = SystemAPI.QueryBuilder()
                 .WithAll<UnitSelectionTag>()
-                .Build().ToEntityArray(Allocator.TempJob);            
-            
+                .Build().ToEntityArray(Allocator.TempJob);
+
             if (SystemAPI.HasComponent<EndDragEvent>(entity))
             {
                 NativeList<Entity> entitiesToSelect = default;
@@ -132,8 +137,11 @@ namespace Game.Scripts.Mechanics.Units.Selection
                 }
 
                 state.EntityManager.RemoveComponent<ClickMouseEvent>(entity);
+
+                castEntity.Dispose();
             }
             
+            ecb.AddComponent<UnitsSelectedEvent>(_selectedEvent);
             ecb.Playback(state.EntityManager);
             
             ecb.Dispose();

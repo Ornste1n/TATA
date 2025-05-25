@@ -55,7 +55,7 @@ public static class SceneSwitcherToolbar
         if (leftContainer == null) return;
 
         // Remove old UI if it exists to prevent duplication
-        if (toolbarUI != null)
+        if (toolbarUI != null && leftContainer.Contains(toolbarUI))
         {
             leftContainer.Remove(toolbarUI);
         }

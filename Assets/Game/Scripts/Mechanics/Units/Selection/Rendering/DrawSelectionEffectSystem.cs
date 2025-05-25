@@ -7,6 +7,7 @@ using Game.Scripts.Mechanics.Units.General;
 
 namespace Game.Scripts.Mechanics.Units.Selection.Rendering
 {
+    [UpdateInGroup(typeof(SelectionSystemGroup))]
     public partial class DrawSelectionEffectSystem : SystemBase
     {
         private Mesh _mesh;
