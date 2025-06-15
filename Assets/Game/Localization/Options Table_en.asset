@@ -196,6 +196,26 @@ MonoBehaviour:
     m_Localized: Input new bind (ECS to cancel)
     m_Metadata:
       m_Items: []
+  - m_Id: 19515674643279872
+    m_Localized: Hotkeys
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19517031051833344
+    m_Localized: Scrolling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19517206021419008
+    m_Localized: 'Mouse speed:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20134712646295552
+    m_Localized: 'Keyboard speed:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20134798746968064
+    m_Localized: 'Drag speed:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

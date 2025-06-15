@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using Game.Scripts.UI.Options.Base;
 using UnityEngine.Localization.Tables;
 using AYellowpaper.SerializedCollections;
-using UnityEngine.Localization.Settings;
 
 namespace Game.Scripts.UI.Options
 {
@@ -40,7 +39,7 @@ namespace Game.Scripts.UI.Options
         private Button _openOptionButton;
 
         private OptionPanel _current;
-        private OptionPanel _generalOptionPanel;
+        private OptionPanel _graphicsOptionPanel;
         
         private readonly Dictionary<IEventHandler, OptionPanel> _panels = new(5);
         
@@ -84,15 +83,16 @@ namespace Game.Scripts.UI.Options
 
         private void InitOptionButtons()
         {
-            _generalOptionPanel = new GeneralPanel(this, "general-content", "general");
+            _graphicsOptionPanel = new GraphicsPanel(this, "graphics-content", "graphics");
             
-            RegisterPanel(_generalOptionPanel);
-            RegisterPanel(new GraphicsPanel(this, "graphics-content", "graphics"));
+            RegisterPanel(_graphicsOptionPanel);
             RegisterPanel(new AudioPanel(this, "audio-content", "audio"));
             RegisterPanel(new ControlsPanel(this, "controls-content", "controls"));
+            RegisterPanel(new HotkeysPanel(this, "hotkeys-content", "hotkeys"));
+            RegisterPanel(new GeneralPanel(this, "general-content", "general"));
             
-            _generalOptionPanel.Button.AddToClassList(ActiveStyle);
-            _current = _generalOptionPanel;
+            _graphicsOptionPanel.Button.AddToClassList(ActiveStyle);
+            _current = _graphicsOptionPanel;
         }
 
         private void RegisterPanel(OptionPanel optionPanel)

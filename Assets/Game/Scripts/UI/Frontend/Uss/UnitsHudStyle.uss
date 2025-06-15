@@ -1,10 +1,6 @@
 :root {
 }
 
-.hidden {
-    display: none;
-}
-
 .unitsMainPanel {
     background-color: rgb(20, 20, 20);
     border-left-color: rgb(123, 1, 211);

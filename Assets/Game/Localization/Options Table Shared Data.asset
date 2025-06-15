@@ -195,6 +195,26 @@ MonoBehaviour:
     m_Key: options.InputBind
     m_Metadata:
       m_Items: []
+  - m_Id: 19515674643279872
+    m_Key: options.Hotkey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19517031051833344
+    m_Key: options.Scrolling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19517206021419008
+    m_Key: options.MouseScrollSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20134712646295552
+    m_Key: options.KeyboardScrollSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20134798746968064
+    m_Key: options.DragScrollSpeed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

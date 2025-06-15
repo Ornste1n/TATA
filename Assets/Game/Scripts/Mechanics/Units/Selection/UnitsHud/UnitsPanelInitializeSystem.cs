@@ -6,7 +6,7 @@ using Game.Scripts.Mechanics.Units.General;
 
 namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
 {
-    [UpdateInGroup(typeof(SelectionSystemGroup))]
+    [UpdateInGroup(typeof(InitializeUnitsSystemGroup))]
     public partial class UnitsPanelBootstrapSystem : SystemBase
     {
         protected override void OnCreate()
@@ -62,12 +62,13 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
         }
     }
     
-    [UpdateInGroup(typeof(SelectionSystemGroup))]
+    [UpdateInGroup(typeof(UpdateSelectionSystem))]
     public partial class UnitsPanelSystem : SystemBase
     {
         private const string HiddenStyle = "hidden";
         private const string SelectedPage = "unitsPageSelected";
         
+        private bool _initialized;
         private UnitView[] _unitViews;
         private VisualElement[] _unitPages;
         
@@ -99,6 +100,8 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
                 page.RegisterCallback<ClickEvent>(ChangeListElement);
             
             container.RegisterCallback<ClickEvent>(SelectUnitView);
+
+            _initialized = true;
         }
         
         protected override void OnUpdate()
@@ -246,6 +249,8 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
 
         protected override void OnDestroy()
         {
+            if(!_initialized) return;
+            
             base.OnDestroy();
             
             foreach (VisualElement page in _unitPages)

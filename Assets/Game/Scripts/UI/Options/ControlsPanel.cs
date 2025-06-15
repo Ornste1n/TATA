@@ -1,167 +1,78 @@
-using Game.Scripts.Inputs;
+using Game.Scripts.Options;
 using UnityEngine.UIElements;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using Game.Scripts.Options.Models;
 using Game.Scripts.UI.Options.Base;
+using Game.Scripts.UI.Frontend.CustomElements;
 
 namespace Game.Scripts.UI.Options
 {
     public class ControlsPanel : OptionPanel
     {
-        private Label _navigationLabel;
-        private ScrollView _scrollView;
-        private VisualElement _currentSelected;
-
-        private bool _hasChanged = false;
+        private readonly List<CustomSlider<ControlsSensitivity>> _sliderCallbacks = new();
+        private readonly Dictionary<IEventHandler, CustomSlider<ControlsSensitivity>> _sliderChanges = new();
         
         public ControlsPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
-            InitializeControlsView();
+            RegisterSlider(ControlsSensitivity.MouseScroll,"mouse-scroll-slider", "mouse-scroll-value-label");
+            RegisterSlider(ControlsSensitivity.KeyboardScroll,"keyboard-scroll-slider", "keyboard-scroll-value-label");
+            RegisterSlider(ControlsSensitivity.DragScroll,"drag-scroll-slider", "drag-scroll-value-label");
         }
 
-        private void InitializeControlsView()
+        public override void Save()
         {
-            InputActionAsset action = InputManager.Instance.Controls.asset;
-            ScrollView scrollView = OptionsWindow.Root.Q<ScrollView>("controls-view");
-
-            _scrollView = scrollView;
-            
-            foreach (InputActionMap map in action.actionMaps)
+            ControlsModelRaw modelRaw = new ControlsModelRaw()
             {
-                foreach (InputAction inputAction in map.actions)
+                DragScrollSpeed = -1f,
+                MouseScrollSpeed = -1f,
+                KeyboardScrollSpeed = -1f,
+            };
+            
+            foreach (CustomSlider<ControlsSensitivity> slider in _sliderCallbacks)
+            {
+                switch (slider.Type)
                 {
-                    for (var i = 0; i < inputAction.bindings.Count; i++)
-                    {
-                        VisualElement container = new();
-                        container.AddToClassList("inputContainer");
-
-                        Label title = new Label(inputAction.name);
-                        title.AddToClassList("inputTitle");
-
-                        string bindingDisplay = InputControlPath.ToHumanReadableString(inputAction.bindings[i].effectivePath, 
-                            InputControlPath.HumanReadableStringOptions.OmitDevice);
-                        
-                        Label key = new Label($"[<color=#00ffff>{bindingDisplay}</color>]");
-                        key.AddToClassList("inputKey");
-                        key.enableRichText = true;
-
-                        var info = new ActionBindingInfo
-                        {
-                            Action = inputAction,
-                            BindingIndex = i,
-                            KeyLabel = key
-                        };
-                        
-                        container.Add(title);
-                        container.Add(key);
-
-                        container.userData = info;
-
-                        scrollView.Add(container);
-                        
-                        container.RegisterCallback<ClickEvent>(SelectAction);
-                    }
+                    case ControlsSensitivity.DragScroll:
+                        modelRaw.DragScrollSpeed = slider.Slider.value;
+                        break;
+                    case ControlsSensitivity.MouseScroll:
+                        modelRaw.MouseScrollSpeed = slider.Slider.value;
+                        break;
+                    case ControlsSensitivity.KeyboardScroll:
+                        modelRaw.KeyboardScrollSpeed = slider.Slider.value;
+                        break;
                 }
+                
+                slider.Slider.RegisterCallback<ChangeEvent<float>>(HandleSliderCallback);
             }
             
-            _navigationLabel = OptionsWindow.Root.Q<Label>("controls-navigation-label");
-            _navigationLabel.text = OptionsWindow.SelectInputSlot;
+            _sliderCallbacks.Clear();
+            OptionsManager.Controls.UpdateSensitivity(modelRaw);
+        }
+
+        public override bool HasChanged() => _sliderCallbacks.Count != 0; 
+        
+        private void RegisterSlider(ControlsSensitivity type, string sliderName, string labelName)
+        {
+            float value = OptionsManager.Controls.GetValue(type);
+            CustomSlider<ControlsSensitivity> customSlider = new(OptionsWindow.Root, type, sliderName, labelName, value);
+
+            _sliderChanges.Add(customSlider.Slider, customSlider);
+            
+            customSlider.Slider.RegisterCallback<ChangeEvent<float>>(HandleSliderCallback);
         }
         
-        private void SelectAction(ClickEvent clickEvent)
+        private void HandleSliderCallback(ChangeEvent<float> changeEvent)
         {
-            VisualElement element = (VisualElement)clickEvent.currentTarget;
-            element.AddToClassList("inputSelected");
-
-            if (_currentSelected != null)
-            {
-                if (ReferenceEquals(element, _currentSelected))
-                {
-                    Rebinding();
-                    return;
-                }
-
-                _currentSelected.RemoveFromClassList("inputSelected");
-            }
+            CustomSlider<ControlsSensitivity> customSlider = _sliderChanges[changeEvent.currentTarget];
             
-            _currentSelected = element;
-            _currentSelected.AddToClassList("inputSelected");
-
-            string newLabel = OptionsWindow.ConfirmInputSlot;
+            customSlider.Slider.UnregisterCallback<ChangeEvent<float>>(HandleSliderCallback);
             
-            if(!ReferenceEquals(_navigationLabel.text, newLabel))
-                _navigationLabel.text = newLabel;
-        }
-
-        private void Rebinding()
-        {
-            if (_currentSelected?.userData is not ActionBindingInfo info)
-                return;
-
-            _navigationLabel.text = OptionsWindow.InputNewBind;
-            
-            InputAction action = info.Action;
-            int bindingIndex = info.BindingIndex;
-            Label keyLabel = info.KeyLabel;
-
-            keyLabel.text = $"[<color=#00ffff>...</color>]";
-            
-            action.Disable();
-            
-            InputActionRebindingExtensions.RebindingOperation rebind = action.PerformInteractiveRebinding(bindingIndex)
-                .WithCancelingThrough("<Keyboard>/escape");
-
-            rebind.OnComplete(operation =>
-                {
-                    operation.Dispose();
-                    action.Enable();
-                    
-                    string newPath = action.bindings[bindingIndex].effectivePath;
-                    string newDisplay = InputControlPath.ToHumanReadableString(newPath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-
-                    keyLabel.text = $"[<color=#00ffff>{newDisplay}</color>]";
-                    
-                    _navigationLabel.text = OptionsWindow.SelectInputSlot;
-                    
-                    _currentSelected.RemoveFromClassList("inputSelected");
-                    _currentSelected = null;
-
-                    if (!_hasChanged) _hasChanged = true;
-                })
-                .OnCancel(op =>
-                {
-                    op.Dispose();
-                    action.Enable();
-
-                    string currentPath = action.bindings[bindingIndex].effectivePath;
-                    string display = InputControlPath.ToHumanReadableString(currentPath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-                    keyLabel.text = $"[<color=#00ffff>{display}</color>]";
-                    
-                    _navigationLabel.text = OptionsWindow.SelectInputSlot;
-                    
-                    _currentSelected.RemoveFromClassList("inputSelected");
-                    _currentSelected = null;
-                });
-
-            rebind.Start();
+            _sliderCallbacks.Add(customSlider);
         }
         
-        public override void Save() => InputManager.Instance.SaveControlOverrides();
-
-        public override void Reset() => InputManager.Instance.ResetOverrides();
-
-        public override void Dispose()
-        {
-            foreach (VisualElement container in _scrollView.Children())
-                container.UnregisterCallback<ClickEvent>(SelectAction);
-        }
-
-        public override bool HasChanged() => _hasChanged;
-    }
-
-    public class ActionBindingInfo
-    {
-        public InputAction Action;
-        public int BindingIndex;
-        public Label KeyLabel;
+        public override void Reset() { }
+        
+        public override void Dispose() { }
     }
 }

@@ -8,11 +8,6 @@
                 </Bindings>
             </engine:Label>
             <engine:VisualElement name="all-options" style="width: 330px; padding-bottom: 100px; padding-left: 15px; padding-top: 5px;">
-                <engine:Button text="Button" name="general" enabled="true" class="optionButton">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(385098964992)" />
-                    </Bindings>
-                </engine:Button>
                 <engine:Button text="Button" name="graphics" class="optionButton">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(389037416448)" />
@@ -28,9 +23,19 @@
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(393680510976)" />
                     </Bindings>
                 </engine:Button>
+                <engine:Button text="Button" name="hotkeys" class="optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(898532106240)" />
+                    </Bindings>
+                </engine:Button>
+                <engine:Button text="Button" name="general" enabled="true" class="optionButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(385098964992)" />
+                    </Bindings>
+                </engine:Button>
             </engine:VisualElement>
             <engine:VisualElement name="options-content" class="optionContent" style="height: 80%;">
-                <engine:VisualElement name="general-content" style="flex-direction: column;">
+                <engine:VisualElement name="general-content" class="hidden" style="flex-direction: column;">
                     <engine:VisualElement name="game-options" class="optionsContent" style="flex-grow: 1;">
                         <engine:Label text="Label" name="game-title" class="contentOptionTitle">
                             <Bindings>
@@ -49,7 +54,7 @@
                         </engine:VisualElement>
                     </engine:VisualElement>
                 </engine:VisualElement>
-                <engine:VisualElement name="graphics-content" class="hidden" style="flex-direction: column;">
+                <engine:VisualElement name="graphics-content" style="flex-direction: column;">
                     <engine:VisualElement name="screen-options" class="optionsContent" style="flex-grow: 1;">
                         <engine:Label text="Label" name="screen-title" class="contentOptionTitle">
                             <Bindings>
@@ -217,10 +222,48 @@
                         </engine:VisualElement>
                     </engine:VisualElement>
                 </engine:VisualElement>
+                <engine:VisualElement name="hotkeys-content" class="hidden" style="flex-direction: column;">
+                    <engine:VisualElement name="hotkeys-options">
+                        <engine:ScrollView name="hotkeys-view" class="controlsView" />
+                        <engine:Label text="Выберите кнопку для замены" name="hotkeys-navigation-label" style="height: 52px; width: 964px; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); font-size: 30px; -unity-text-align: lower-left; margin-left: 10px;" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
                 <engine:VisualElement name="controls-content" class="hidden" style="flex-direction: column;">
-                    <engine:VisualElement name="controls-options">
-                        <engine:ScrollView name="controls-view" class="controlsView" />
-                        <engine:Label text="Выберите кнопку для замены" name="controls-navigation-label" style="height: 52px; width: 964px; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); font-size: 30px; -unity-text-align: lower-left; margin-left: 10px;" />
+                    <engine:VisualElement name="scrolling-options" class="optionsContent" style="flex-grow: 1;">
+                        <engine:Label text="Label" name="scrolling-title" class="contentOptionTitle">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(19517031051833344)" />
+                            </Bindings>
+                        </engine:Label>
+                        <engine:VisualElement name="scrolling-options-container" class="optionsContainer" style="padding-left: 20px; flex-direction: column;">
+                            <engine:VisualElement name="mouse-scroll" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(19517206021419008)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="mouse-scroll-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="mouse-scroll-slider" />
+                            </engine:VisualElement>
+                            <engine:VisualElement name="keyboard-scroll" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(20134712646295552)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="keyboard-scroll-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="keyboard-scroll-slider" />
+                            </engine:VisualElement>
+                            <engine:VisualElement name="drag-scroll" class="sliderBlock" style="-unity-slice-scale: 1px;">
+                                <engine:Label text="Master Volume:" class="blockLabel">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:2e4624807878fbc49919a68454c34fe9" entry="Id(20134798746968064)" />
+                                    </Bindings>
+                                </engine:Label>
+                                <engine:Label text="100%" name="drag-scroll-value-label" class="blockLabel" />
+                                <engine:Slider label="Slider" value="48.7" high-value="100" name="drag-scroll-slider" />
+                            </engine:VisualElement>
+                        </engine:VisualElement>
                     </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>

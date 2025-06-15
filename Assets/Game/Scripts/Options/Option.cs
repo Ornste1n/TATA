@@ -9,10 +9,10 @@ namespace Game.Scripts.Options
         public void Initialize(T model)
         {
             Model = model;
-            HandleOptions();
+            PresetOptions();
         }
 
-        protected abstract void HandleOptions();
+        protected virtual void PresetOptions() {}
 
         public abstract T CreateDefaultModel();
     }

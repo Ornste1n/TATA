@@ -12,12 +12,14 @@ namespace Game.Scripts.Options
         
         public static GraphicsOption Graphics { get; private set; }
         public static AudioOption Audio { get; private set; }
+        public static ControlsOption Controls { get; private set; }
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         private static async void LoadConfig()
         {
             Audio = new AudioOption();
             Graphics = new GraphicsOption();
+            Controls = new ControlsOption();
             
             try
             {
@@ -26,14 +28,15 @@ namespace Game.Scripts.Options
                 if (_model == null)
                     throw new NullReferenceException();
             }
-            catch (Exception _)
+            catch
             {
                 Debug.LogWarning("Option Exception: Model is invalid");
 
                 _model = new OptionModel()
                 {
                     Audio = Audio.CreateDefaultModel(),
-                    Graphics = Graphics.CreateDefaultModel()
+                    Graphics = Graphics.CreateDefaultModel(),
+                    Controls = Controls.CreateDefaultModel()
                 };
                 
                 Debug.LogWarning("Create Default Model");
@@ -42,6 +45,7 @@ namespace Game.Scripts.Options
             
             Audio.Initialize(_model.Audio);
             Graphics.Initialize(_model.Graphics);
+            Controls.Initialize(_model.Controls);
         }
 
         public static async Task SaveAll()

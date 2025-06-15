@@ -1,10 +1,10 @@
+using System;
 using UnityEngine;
-using Game.Scripts.Options;
 using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Frontend.CustomElements
 {
-    public class CustomSlider
+    public class CustomSlider<T> where T : Enum
     {
         private readonly Slider m_Slider;
         private readonly Label m_ValueLabel;
@@ -16,9 +16,9 @@ namespace Game.Scripts.UI.Frontend.CustomElements
         private VisualElement m_NewDragger;
 
         public Slider Slider => m_Slider;
-        public AudioVolumeEnum Type { get; }
+        public T Type { get; }
         
-        public CustomSlider(VisualElement root, AudioVolumeEnum type, string sliderName, string valueLabelName, float value)
+        public CustomSlider(VisualElement root, T type, string sliderName, string valueLabelName, float value)
         {
             Type = type;
             m_Root = root;

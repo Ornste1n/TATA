@@ -1,10 +1,10 @@
-using Game.Scripts.Data.Options;
+using Game.Scripts.Options.Models;
 
 namespace Game.Scripts.Options
 {
     public class AudioOption : Option<AudioModel>
     {
-        protected override void HandleOptions()
+        protected override void PresetOptions()
         {
             
         }

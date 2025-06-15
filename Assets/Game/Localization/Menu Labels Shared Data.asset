@@ -31,6 +31,18 @@ MonoBehaviour:
     m_Key: mainMenu.Campaign
     m_Metadata:
       m_Items: []
+  - m_Id: 18787722506940416
+    m_Key: mainMenu.PressToContinue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20622274267328512
+    m_Key: mainMenu.SaveGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20622353183158272
+    m_Key: mainMeny.LoadGame
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

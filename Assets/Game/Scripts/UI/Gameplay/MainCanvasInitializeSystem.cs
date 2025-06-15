@@ -9,8 +9,11 @@ namespace Game.Scripts.UI.Gameplay
         public UnityObjectRef<UIDocument> Document;
     }
 
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial class MainCanvasInitializeSystem : SystemBase
     {
+        private GameMenu m_GameMenu;
+        
         protected override void OnCreate()
         {
             RequireForUpdate<MainCanvasRawData>();
@@ -29,7 +32,14 @@ namespace Game.Scripts.UI.Gameplay
                 Document = document
             });
 
+            m_GameMenu = new GameMenu(document);
+            
             Enabled = false;
+        }
+
+        protected override void OnDestroy()
+        {
+            m_GameMenu.Disable();
         }
     }
 }

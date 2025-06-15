@@ -10,7 +10,9 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
         [SerializeField] private Material m_Material;
         [SerializeField] private float m_Height;
         [SerializeField] private float m_Width;
+        [Space]
         [SerializeField] private float m_ScaleFactor;
+        [SerializeField] private float3 m_MinSize;
 
         [Header("Position")]
         [SerializeField] private float m_YOffset;
@@ -27,6 +29,7 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
                     HealthMaterial = authoring.m_Material,
                     Size = new float2(authoring.m_Width,authoring.m_Height),
                     Offset = new float2(authoring.m_XOffset, authoring.m_YOffset),
+                    MinSize = authoring.m_MinSize
                 });
             }
         }
@@ -36,6 +39,7 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
     {
         public float2 Size;
         public float2 Offset;
+        public float3 MinSize;
         public float ScaleFactor;
         public UnityObjectRef<Material> HealthMaterial;
     }

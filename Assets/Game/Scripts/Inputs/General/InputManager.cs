@@ -1,10 +1,9 @@
 using System.IO;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using Game.Scripts.Data;
 using UnityEngine.InputSystem;
 
-namespace Game.Scripts.Inputs
+namespace Game.Scripts.Inputs.General
 {
     public class InputManager : MonoBehaviour
     {
@@ -40,7 +39,6 @@ namespace Game.Scripts.Inputs
             {
                 string json = File.ReadAllText(Paths.Inputs);
                 Controls.LoadBindingOverridesFromJson(json);
-                Debug.Log("Control bindings loaded from JSON");
             }
             else
             {
@@ -52,7 +50,6 @@ namespace Game.Scripts.Inputs
         {
             string json = Controls.SaveBindingOverridesAsJson();
             File.WriteAllText(Paths.Inputs, json);
-            Debug.Log("Control bindings saved to JSON");
         }
 
         public void ResetOverrides()

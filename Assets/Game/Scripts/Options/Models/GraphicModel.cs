@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
+using Newtonsoft.Json;
 using Game.Scripts.Data.Saver;
 using System.Collections.Generic;
-using Game.Scripts.Options;
-using Newtonsoft.Json;
 
-namespace Game.Scripts.Data.Options
+namespace Game.Scripts.Options.Models
 {
     [Serializable]
     public class GraphicModel : IJsonSerializable

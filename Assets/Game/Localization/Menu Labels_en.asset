@@ -34,6 +34,18 @@ MonoBehaviour:
     m_Localized: Campaign
     m_Metadata:
       m_Items: []
+  - m_Id: 18787722506940416
+    m_Localized: Press the space bar to continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20622274267328512
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20622353183158272
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

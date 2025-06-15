@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8367124659459140075}
   - component: {fileID: 571341347596705048}
+  - component: {fileID: 7383390623456028837}
   m_Layer: 0
   m_Name: Main Canvas
   m_TagString: Untagged
@@ -51,3 +52,59 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &7383390623456028837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184502848799056634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9547394447dfe14cb3fa52faeca7e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiDocument: {fileID: 571341347596705048}
+  _optionTable:
+    m_TableReference:
+      m_TableCollectionName: GUID:2e4624807878fbc49919a68454c34fe9
+  _screenModesNames:
+    _serializedList:
+    - Key: 1
+      Value:
+        m_KeyId: 0
+        m_Key: options.Fullscreen
+    - Key: 2
+      Value:
+        m_KeyId: 0
+        m_Key: options.Borderless
+    - Key: 3
+      Value:
+        m_KeyId: 0
+        m_Key: options.Windowed
+  _qualityLevel:
+    _serializedList:
+    - Key: 0
+      Value:
+        m_KeyId: 0
+        m_Key: options.Low
+    - Key: 1
+      Value:
+        m_KeyId: 0
+        m_Key: options.Medium
+    - Key: 2
+      Value:
+        m_KeyId: 0
+        m_Key: options.High
+  _customQualityReference:
+    m_KeyId: 0
+    m_Key: optoins.Custom
+  _selectInputSlot:
+    m_KeyId: 0
+    m_Key: options.SelectInputLabel
+  _confirmInputSlot:
+    m_KeyId: 0
+    m_Key: options.ConfirmChoise
+  _inputNewBind:
+    m_KeyId: 0
+    m_Key: options.InputBind

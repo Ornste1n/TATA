@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 using Game.Scripts.Data.Saver;
-using Game.Scripts.Data.Options;
+using Game.Scripts.Options.Models;
 
 namespace Game.Scripts.Options
 {
@@ -12,10 +12,14 @@ namespace Game.Scripts.Options
         [JsonProperty(Required = Required.Always)]
         public AudioModel Audio;
 
+        [JsonProperty(Required = Required.Always)]
+        public ControlsModel Controls;
+
         public void Validate()
         {
             Audio.Validate();
             Graphics.Validate();
+            Controls.Validate();
         }
     }
 }

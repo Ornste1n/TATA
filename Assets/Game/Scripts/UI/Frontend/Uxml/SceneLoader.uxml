@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/Base/GeneralStyle.uss?fileID=7433441132597879392&amp;guid=9c5de81272107724aa1dfa078daba55f&amp;type=3#GeneralStyle" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Game/Source/Scenes%20Background/starcraft-pejzazh-doliny-temnoj.jpg?fileID=2800000&amp;guid=fc284d0afe7d26148b3ea598f3be9667&amp;type=3#starcraft-pejzazh-doliny-temnoj&quot;);">
+        <ui:Label text="Label" name="continue-label" class="hidden" style="align-self: center; bottom: 15px; position: absolute; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); font-size: 35px;">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:1bf62d5fd9a12b7499159636392485f1" entry="Id(18787722506940416)" />
+            </Bindings>
+        </ui:Label>
+    </ui:VisualElement>
+</ui:UXML>

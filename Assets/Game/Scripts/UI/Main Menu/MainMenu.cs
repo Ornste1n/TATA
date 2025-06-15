@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Threading;
+using Game.Scripts.Scenes;
 using UnityEngine.UIElements;
 using Game.Scripts.UI.Options;
-using UnityEngine.Localization.Settings;
 
 namespace Game.Scripts.UI.Frontend.MainMenu
 {
@@ -26,6 +26,7 @@ namespace Game.Scripts.UI.Frontend.MainMenu
             _quitButton = root.Q<Button>("quit");
             
             _quitButton.clicked += Quit;
+            _continueButton.clicked += LoadGame;
             _optionsWindow.OnChangeActive += SwitchOption;
         }
 
@@ -37,11 +38,18 @@ namespace Game.Scripts.UI.Frontend.MainMenu
                 _navigationBar.RemoveFromClassList("hidden");
         }
 
+        private async void LoadGame()
+        {
+            CancellationTokenSource source = new();
+            await SceneSwitcher.LoadGameSceneAsync("Builder", source.Token);
+        }
+
         private void Quit() => Application.Quit();
 
         private void OnDestroy()
         {
             _quitButton.clicked -= Quit;
+            _continueButton.clicked -= LoadGame;
             _optionsWindow.OnChangeActive -= SwitchOption;
 
             _optionsWindow.Dispose();

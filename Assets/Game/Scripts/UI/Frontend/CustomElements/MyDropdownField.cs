@@ -1,9 +1,11 @@
+using System;
 using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Frontend.CustomElements
 {
     public class MyDropdownField : DropdownField
     {
+        [Obsolete("Obsolete")]
         public new class UxmlFactory : UxmlFactory<MyDropdownField, UxmlTraits> { }
 
         public MyDropdownField()

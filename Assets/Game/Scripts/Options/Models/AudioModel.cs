@@ -1,8 +1,8 @@
 using System;
-using Newtonsoft.Json;
 using Game.Scripts.Data.Saver;
+using Newtonsoft.Json;
 
-namespace Game.Scripts.Data.Options
+namespace Game.Scripts.Options.Models
 {
     public class AudioModel : IJsonSerializable
     {
@@ -24,16 +24,12 @@ namespace Game.Scripts.Data.Options
 
         public void Validate()
         {
-            void Clamp(float value)
-            {
-                if (value < 0 || value > 100)
-                    throw new Exception($"Volume value {value} out of range [0, 100]");
-            }
-
-            Clamp(MasterVolume);
-            Clamp(Music);
-            Clamp(Effects);
-            Clamp(Interface);
+            MasterVolume = Clamp(MasterVolume);
+            Music = Clamp(Music);
+            Effects = Clamp(Effects);
+            Interface = Clamp(Interface);
+            
+            float Clamp(float value) => (value < 0 || value > 100) ? 100f : value;
         }
     }
 }

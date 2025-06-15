@@ -14,6 +14,7 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
         private MaterialPropertyBlock _materialProperty;
 
         private float2 _offset;
+        private float3 _minSize;
         private float _scaleFactor;
         private Camera _mainCamera;
 
@@ -33,6 +34,7 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
 
             _mainCamera = Camera.main;
             _offset = barComponent.Offset;
+            _minSize = barComponent.MinSize;
             _scaleFactor = barComponent.ScaleFactor;
             _healthBarMaterial = barComponent.HealthMaterial.Value;
             _mesh = MeshUtility.CreateQuadMesh(barComponent.Size.x, barComponent.Size.y);
@@ -49,6 +51,7 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
 
             float2 offset = _offset;
             Camera camera = _mainCamera;
+            float3 minSize = _minSize;
             float scaleFactor = _scaleFactor;
 
             Vector3 cameraPosition = camera.transform.position;
@@ -67,7 +70,10 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
                 barPosition.y += offset.y;
 
                 float distance = Vector3.Distance(cameraPosition, barPosition);
-                Vector3 scale = distance * Vector3.one * barScaleFactor * scaleFactor;
+                float3 scale = distance * Vector3.one * barScaleFactor * scaleFactor;
+
+                if (scale.x < minSize.x || scale.y < minSize.y)
+                    scale = minSize;
                 
                 Matrix4x4 matrix4X4 = Matrix4x4.TRS(barPosition, barRotation, scale);
                 

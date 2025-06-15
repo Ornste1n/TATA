@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using Game.Scripts.Data.Options;
 using System.Collections.Generic;
+using Game.Scripts.Options.Models;
 
 namespace Game.Scripts.Options
 {
     public class GraphicsOption : Option<GraphicModel>
     {
-        protected override void HandleOptions()
+        protected override void PresetOptions()
         {
             RefreshRate rate = new RefreshRate
             {

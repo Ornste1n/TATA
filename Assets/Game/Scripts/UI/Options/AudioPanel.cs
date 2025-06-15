@@ -8,8 +8,8 @@ namespace Game.Scripts.UI.Options
 {
     public class AudioPanel : OptionPanel
     {
-        private readonly List<CustomSlider> _sliderCallbacks = new();
-        private readonly Dictionary<IEventHandler, CustomSlider> _sliderChanges = new();
+        private readonly List<CustomSlider<AudioVolumeEnum>> _sliderCallbacks = new();
+        private readonly Dictionary<IEventHandler, CustomSlider<AudioVolumeEnum>> _sliderChanges = new();
         
         public AudioPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
@@ -21,7 +21,7 @@ namespace Game.Scripts.UI.Options
 
         public override void Save()
         {
-            foreach (CustomSlider slider in _sliderCallbacks)
+            foreach (CustomSlider<AudioVolumeEnum> slider in _sliderCallbacks)
             {
                 OptionsManager.Audio.ChangeVolume(slider.Type, slider.Slider.value);
                 slider.Slider.RegisterCallback<ChangeEvent<float>>(HandleSliderCallback);
@@ -35,7 +35,7 @@ namespace Game.Scripts.UI.Options
         private void RegisterSlider(AudioVolumeEnum type, string sliderName, string labelName)
         {
             float value = OptionsManager.Audio.GetValue(type);
-            CustomSlider customSlider = new CustomSlider(OptionsWindow.Root, type, sliderName, labelName, value);
+            CustomSlider<AudioVolumeEnum> customSlider = new(OptionsWindow.Root, type, sliderName, labelName, value);
 
             _sliderChanges.Add(customSlider.Slider, customSlider);
             
@@ -44,7 +44,7 @@ namespace Game.Scripts.UI.Options
 
         private void HandleSliderCallback(ChangeEvent<float> changeEvent)
         {
-            CustomSlider customSlider = _sliderChanges[changeEvent.currentTarget];
+            CustomSlider<AudioVolumeEnum> customSlider = _sliderChanges[changeEvent.currentTarget];
             
             customSlider.Slider.UnregisterCallback<ChangeEvent<float>>(HandleSliderCallback);
             

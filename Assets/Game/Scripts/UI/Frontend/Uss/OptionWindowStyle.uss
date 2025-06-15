@@ -307,10 +307,6 @@ MyDropdownField .unity-base-field__input {
     border-bottom-left-radius: 3px;
 }
 
-.hidden {
-    display: none;
-}
-
 MyDropdownField:disabled {
     opacity: 0.6;
 }
@@ -345,10 +341,6 @@ MyDropdownField:disabled .unity-base-popup-field__arrow {
 
 .activeOptionButton {
     -unity-background-image-tint-color: rgb(97, 1, 166);
-}
-
-.hidden {
-    display: none;
 }
 
 .audioBlock {

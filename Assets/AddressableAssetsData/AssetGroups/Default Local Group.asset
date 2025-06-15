@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: 79a6bd47ad0dd5647a3ed79a79ae12bc
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: aaf8a09606dc94946a368bba7ed2545d
+    m_Address: Assets/Game/Prefabs/Scene Transition Element.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scene Transition
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 029a1355432c5864e8f5fbe0ac840c8d, type: 2}
   m_SchemaSet:

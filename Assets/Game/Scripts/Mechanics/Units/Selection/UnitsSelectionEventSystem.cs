@@ -12,9 +12,58 @@ using ConvexCollider = Unity.Physics.ConvexCollider;
 
 namespace Game.Scripts.Mechanics.Units.Selection
 {
-    [BurstCompile]
-    [UpdateInGroup(typeof(SelectionSystemGroup))]
+    [UpdateInGroup(typeof(UpdateSelectionSystem))]
     public partial struct UnitsSelectionSystem : ISystem
+    {
+        [BurstCompile]
+        public void OnCreate(ref SystemState state)
+        {
+            Entity singleton = state.EntityManager.CreateEntity();
+            state.EntityManager.AddComponentData(singleton, new LastSelectedUnit { Value = Entity.Null });
+            
+            state.RequireForUpdate<LastSelectedUnit>();
+            state.RequireForUpdate<CameraInputComponent>();
+            state.RequireForUpdate<PhysicsWorldSingleton>();
+        }
+
+        public void OnUpdate(ref SystemState state)
+        {
+            CameraInputComponent input = SystemAPI.GetSingleton<CameraInputComponent>();
+            CollisionWorld physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
+
+            float3 startPos = input.WorldMousePosition + new float3(0, 10, 0);
+            float3 endPos = input.WorldMousePosition;
+
+            RaycastInput rayInput = new()
+            {
+                End = endPos,
+                Start = startPos,
+                Filter = CollisionFilter.Default
+            };
+
+            Entity selSingleton = SystemAPI.GetSingletonEntity<LastSelectedUnit>();
+            Entity lastSelected = SystemAPI.GetComponent<LastSelectedUnit>(selSingleton).Value;
+
+            EndSimulationEntityCommandBufferSystem ecbSystem = state.World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
+            EntityCommandBuffer.ParallelWriter ecb = ecbSystem.CreateCommandBuffer().AsParallelWriter();
+
+            JobHandle jobHandle = new RaycastSelectJob()
+            {
+                PhysicsWorld = physicsWorld,
+                Ray = rayInput,
+                Ecb = ecb,
+                LastSelected = lastSelected,
+                SingletonEntity = selSingleton
+            }.Schedule(state.Dependency);
+
+            ecbSystem.AddJobHandleForProducer(jobHandle);
+            state.Dependency = jobHandle;
+        }
+    }
+    
+    [UpdateInGroup(typeof(UpdateSelectionSystem))]
+    [BurstCompile]
+    public partial struct UnitsSelectionEventSystem : ISystem
     {
         private Entity _selectedEvent;
         
@@ -252,6 +301,43 @@ namespace Game.Scripts.Mechanics.Units.Selection
                     
                 EntitiesToDeselect.Add(selected);
             }
+        }
+    }
+    
+    [BurstCompile]
+    public struct RaycastSelectJob : IJob
+    {
+        [ReadOnly] public CollisionWorld PhysicsWorld;
+        public RaycastInput Ray;
+
+        public EntityCommandBuffer.ParallelWriter Ecb;
+        public Entity LastSelected;
+        public Entity SingletonEntity;
+
+        [BurstCompile]
+        public void Execute()
+        {
+            PhysicsWorld.CastRay(Ray, out RaycastHit hit);
+
+            Entity newSelected = Entity.Null;
+
+            if (hit.Entity != Entity.Null)
+            {
+                newSelected = hit.Entity;
+
+                if (LastSelected != Entity.Null && LastSelected != newSelected)
+                    Ecb.RemoveComponent<UnitsHoverTag>(0, LastSelected);
+
+                if (newSelected != LastSelected)
+                    Ecb.AddComponent<UnitsHoverTag>(0, newSelected);
+            }
+            else
+            {
+                if (LastSelected != Entity.Null)
+                    Ecb.RemoveComponent<UnitsHoverTag>(0, LastSelected);
+            }
+
+            Ecb.SetComponent(0, SingletonEntity, new LastSelectedUnit { Value = newSelected });
         }
     }
 }
