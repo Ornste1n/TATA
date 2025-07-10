@@ -1,67 +1,12 @@
 using System;
 using Unity.Entities;
 using UnityEngine.UIElements;
-using Game.Scripts.UI.Gameplay;
+using System.Collections.Generic;
 using Game.Scripts.Mechanics.Units.General;
+using Game.Scripts.Mechanics.Units.Selection.UnitsHud.Elements;
 
 namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
 {
-    [UpdateInGroup(typeof(InitializeUnitsSystemGroup))]
-    public partial class UnitsPanelBootstrapSystem : SystemBase
-    {
-        protected override void OnCreate()
-        {
-            RequireForUpdate<MainCanvasData>();
-            RequireForUpdate<UnitsPanelData>();
-        }
-    
-        protected override void OnUpdate()
-        {
-            MainCanvasData documentData = SystemAPI.GetSingleton<MainCanvasData>();
-            UnitsPanelData unitsData = SystemAPI.GetSingleton<UnitsPanelData>();
-    
-            VisualTreeAsset unitAsset = unitsData.UnitViewPrefab.Value;
-            VisualTreeAsset pageAsset = unitsData.UnitPagePrefab.Value;
-            
-            VisualElement root = documentData.Document.Value.rootVisualElement;
-            
-            VisualElement unitsPanel = root.Q<VisualElement>("units-main");
-            VisualElement pageList = root.Q<VisualElement>("units-page-list");
-            VisualElement unitsContainer = unitsPanel.Q<VisualElement>("units-container");
-                
-            UnitView[] buffer = new UnitView[unitsData.UnitsCount];
-            VisualElement[] pages = new VisualElement[unitsData.PageCount];
-            
-            for (int i = 0; i < unitsData.UnitsCount; i++)
-            {
-                TemplateContainer unitTemplate = unitAsset.Instantiate();
-                VisualElement unitView = unitTemplate.Q<VisualElement>("unit");
-
-                buffer[i] = new UnitView(unitView);
-                unitsContainer.Add(unitView);
-            }
-
-            for (int i = 0; i < unitsData.PageCount; i++)
-            {
-                TemplateContainer template = pageAsset.Instantiate();
-                VisualElement page = template.Q<VisualElement>("unit-page");
-                
-                page.Q<Label>("page-number").text = $"{i + 1}";
-                page.AddToClassList("hidden");
-                pageList.Add(page);
-                
-                pages[i] = page;
-            }
-
-            UnitInfoPanel infoPanel = new UnitInfoPanel(unitsPanel);
-            
-            UnitsPanelSystem system = World.GetExistingSystemManaged<UnitsPanelSystem>();
-            system.Initialize(unitsContainer, infoPanel, pages, buffer);
-
-            Enabled = false;
-        }
-    }
-    
     [UpdateInGroup(typeof(UpdateSelectionSystem))]
     public partial class UnitsPanelSystem : SystemBase
     {
@@ -71,6 +16,8 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
         private bool _initialized;
         private UnitView[] _unitViews;
         private VisualElement[] _unitPages;
+        
+        private Dictionary<uint, UnitPanelData> _unitData;
         
         private UnitInfoPanel _unitInfoPanel;
         private VisualElement _unitsSelected;
@@ -85,8 +32,16 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             RequireForUpdate<UnitsSelectedEvent>();
         }
         
-        public void Initialize(VisualElement container, UnitInfoPanel infoPanel, VisualElement[] pages, UnitView[] views)
+        public void Initialize
+        (
+            Dictionary<uint, UnitPanelData> data,
+            VisualElement container, 
+            UnitInfoPanel infoPanel, 
+            VisualElement[] pages, 
+            UnitView[] views
+        )
         {
+            _unitData = data;
             _unitViews = views;
             _unitPages = pages;
             _unitInfoPanel = infoPanel;
@@ -99,9 +54,8 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             foreach (VisualElement page in pages)
                 page.RegisterCallback<ClickEvent>(ChangeListElement);
             
-            container.RegisterCallback<ClickEvent>(SelectUnitView);
-
             _initialized = true;
+            container.RegisterCallback<ClickEvent>(HandleUnitViewEvent);
         }
         
         protected override void OnUpdate()
@@ -121,11 +75,20 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
 
             RemoveEventComponent();
 
+            if (lastIndex == 1 && !poolIsOver)
+            {
+                ShowUnitView(0);
+                return;
+            }
+            
+            if(_unitInfoPanel.IsActive)
+                SetActiveInfoPanel(false);
+            
             if (page < activePages)
                 SetVisiblePages(pages, false, page + 1, activePages);
             else
                 SetVisiblePages(pages, true, activePages, page);
-            
+
             if (lastIndex > activeCount || poolIsOver) return;
             
             DeactivateUnits(unitViews, HiddenStyle, lastIndex, activeCount);
@@ -139,17 +102,14 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             
             int i = 0;
             int maxUnitsCount = unitViews.Length;
-            
+            Dictionary<uint, UnitPanelData> unitPanelS = _unitData;
+
             foreach ((UnitAspect Aspect, RefRW<UnitSelectionTag> Tag) unit in SystemAPI.Query<UnitAspect, RefRW<UnitSelectionTag>>())
             {
                 unit.Tag.ValueRW.Group = page;
 
                 if (page == 0)
-                {
-                    unitViews[i].ActivateOrUpdate(hiddenStyle, unit.Aspect.Entity);
-                }
-                
-                i++;
+                    unitViews[i++].ActivateOrUpdate(hiddenStyle, unitPanelS[unit.Aspect.Id].Image, unit.Aspect.Entity);
 
                 if (i != maxUnitsCount) continue;
                 
@@ -166,17 +126,32 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             return i;
         }
 
-        private void SelectUnitView(ClickEvent clickEvent)
+        private void HandleUnitViewEvent(ClickEvent clickEvent)
         {
             VisualElement clicked = (VisualElement)clickEvent.target;
             int index = _unitsContainer.IndexOf(clicked);
+            ShowUnitView(index);
+        }
 
-            UnitAspect unit = SystemAPI.GetAspect<UnitAspect>(_unitViews[index].Entity);
+        private void ShowUnitView(int index)
+        {
+            Entity entity = _unitViews[index].Entity;
             
-            _unitInfoPanel.Show(unit.Damageable.Health, unit.Damageable.MaxHealth);
+            if(_unitInfoPanel.IsActive && _unitInfoPanel.Entity == entity) return;
             
-            _unitInfoPanel.SetActive(true, HiddenStyle);
-            _unitsSelected.AddToClassList(HiddenStyle);
+            UnitAspect unit = SystemAPI.GetAspect<UnitAspect>(entity);
+            
+            _unitInfoPanel.Show(entity, _unitData[unit.Id], unit.Damageable);
+            SetActiveInfoPanel(true);
+        }
+
+        private void SetActiveInfoPanel(bool active)
+        {
+            _unitInfoPanel.SetActive(active, HiddenStyle);
+            if(active)
+                _unitsSelected.AddToClassList(HiddenStyle);
+            else
+                _unitsSelected.RemoveFromClassList(HiddenStyle);
         }
         
         private void ChangeListElement(ClickEvent clickEvent)
@@ -190,12 +165,13 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             string hiddenStyle = HiddenStyle;
             int activeCount = _currentActive;
             UnitView[] unitViews = _unitViews;
+            Dictionary<uint, UnitPanelData> unitPanel = _unitData;
             
             foreach ((UnitAspect Aspect, RefRO<UnitSelectionTag> Tag) unit in SystemAPI.Query<UnitAspect, RefRO<UnitSelectionTag>>())
             {
                 if(unit.Tag.ValueRO.Group != index) continue;
 
-                unitViews[i].ActivateOrUpdate(hiddenStyle, unit.Aspect.Entity);
+                unitViews[i].ActivateOrUpdate(hiddenStyle, unitPanel[unit.Aspect.Id].Image, unit.Aspect.Entity);
                 i++;
             }
 
@@ -256,7 +232,7 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             foreach (VisualElement page in _unitPages)
                 page.UnregisterCallback<ClickEvent>(ChangeListElement);
             
-            _unitsContainer.UnregisterCallback<ClickEvent>(SelectUnitView);
+            _unitsContainer.UnregisterCallback<ClickEvent>(HandleUnitViewEvent);
         }
     }
 }

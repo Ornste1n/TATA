@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &338400612
+--- !u!1 &283526752
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,34 +127,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 338400614}
-  - component: {fileID: 338400613}
+  - component: {fileID: 283526754}
+  - component: {fileID: 283526753}
   m_Layer: 0
-  m_Name: '[Camera] Movement Authoring'
+  m_Name: '[Units] Units Initialize'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &338400613
+--- !u!114 &283526753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338400612}
+  m_GameObject: {fileID: 283526752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8c35b5fdcb74420a51f3aba1f3d11b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 570d8422ecbb43e795bb7e832d583d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &338400614
+  _unitsTable:
+    m_TableReference:
+      m_TableCollectionName: GUID:af4607df83f10b34eba6ff22eaa4e59a
+  _units:
+  - {fileID: 11400000, guid: 8cb9bdfca5f00c4418f5451bbb76f7bf, type: 2}
+  - {fileID: 11400000, guid: e41c21fb452b9df448fc55c9f120d42c, type: 2}
+--- !u!4 &283526754
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338400612}
+  m_GameObject: {fileID: 283526752}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -209,6 +215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxUnitsSize: 39
   _unitPrefab: {fileID: 9197481963319205126, guid: 59b4e2c96b2049148b1208e0d2772900, type: 3}
+  _maxSkillSize: 5
+  _unitSkillPrefab: {fileID: 9197481963319205126, guid: be1bda8f56616ca4bad98d17ef0d6925, type: 3}
   _maxPageSize: 8
   _unitPagePrefab: {fileID: 9197481963319205126, guid: a503f12e5739edc45b262d513ea6ecce, type: 3}
 --- !u!1 &899449319
@@ -431,7 +439,7 @@ SceneRoots:
   - {fileID: 1676903751}
   - {fileID: 714873975}
   - {fileID: 1497251663}
+  - {fileID: 283526754}
   - {fileID: 899449321}
   - {fileID: 1947236361}
   - {fileID: 1759517857}
-  - {fileID: 338400614}

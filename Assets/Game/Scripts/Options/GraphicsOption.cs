@@ -16,8 +16,6 @@ namespace Game.Scripts.Options
                 numerator = Model.RefreshRate
             };
             
-            Debug.Log("Load graphic model and apply config");
-            
             Screen.SetResolution(Model.Width, Model.Height, Model.ScreenMode, rate);
         }
 

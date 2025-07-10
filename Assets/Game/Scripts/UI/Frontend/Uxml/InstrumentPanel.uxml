@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/UnitsHudStyle.uss?fileID=7433441132597879392&amp;guid=9e5c953c7e7a7b7489c23ff84051b006&amp;type=3#UnitsHudStyle" />
+    <ui:VisualElement name="instruments-panel" class="unitsMainPanel" style="flex-grow: 1; min-width: 445px; width: 445px; max-width: 445px; min-height: 230px; height: 230px; padding-right: 5px; padding-left: 5px;">
+        <ui:VisualElement name="skills-content" style="flex-direction: row; justify-content: space-between;" />
+    </ui:VisualElement>
+</ui:UXML>

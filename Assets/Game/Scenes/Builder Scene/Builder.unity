@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SceneAsset: {fileID: 102900000, guid: 5de80124314f2234aa76e0067057ed9f, type: 3}
-  _HierarchyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _HierarchyColor: {r: 1, g: 0.44275072, b: 0, a: 1}
   AutoLoadScene: 1
   _SceneGUID:
     Value:
@@ -575,13 +575,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133412275}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: -5.01, y: 38.7, z: -31.1}
+  m_LocalRotation: {x: 0.47116584, y: 0, z: 0, w: 0.8820447}
+  m_LocalPosition: {x: -5.01, y: 31.55, z: -31.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 56.22, y: 0, z: 0}
 --- !u!114 &2133412279
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="UnitsHud" src="project://database/Assets/Game/Scripts/UI/Frontend/Uxml/UnitsHud.uxml?fileID=9197481963319205126&amp;guid=c3be57956d8d9b941b1ce5a4ff5efa46&amp;type=3#UnitsHud" />
+    <ui:Template name="InstrumentPanel" src="project://database/Assets/Game/Scripts/UI/Frontend/Uxml/InstrumentPanel.uxml?fileID=9197481963319205126&amp;guid=240a709e229e4834eb713df63ca01a3f&amp;type=3#InstrumentPanel" />
     <ui:Template name="PauseMenu" src="project://database/Assets/Game/Scripts/UI/Frontend/Uxml/GameMenu.uxml?fileID=9197481963319205126&amp;guid=4849d966d146b4a4e80e68f3c693536b&amp;type=3#GameMenu" />
     <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/UnitsHudStyle.uss?fileID=7433441132597879392&amp;guid=9e5c953c7e7a7b7489c23ff84051b006&amp;type=3#UnitsHudStyle" />
     <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/Base/GeneralStyle.uss?fileID=7433441132597879392&amp;guid=9c5de81272107724aa1dfa078daba55f&amp;type=3#GeneralStyle" />
     <ui:Instance template="UnitsHud" name="units-template" style="align-self: center; position: absolute; bottom: 10px;" />
+    <ui:Instance template="InstrumentPanel" style="right: 10px; bottom: 10px; position: absolute;" />
     <ui:Instance template="PauseMenu" name="game-menu" class="hidden" style="flex-grow: 1;" />
 </ui:UXML>

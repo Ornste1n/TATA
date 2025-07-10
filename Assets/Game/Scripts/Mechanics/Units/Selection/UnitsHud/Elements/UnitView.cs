@@ -1,7 +1,7 @@
 using Unity.Entities;
 using UnityEngine.UIElements;
 
-namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
+namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud.Elements
 {
     public class UnitView
     {
@@ -15,10 +15,12 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             m_Element = element;
         }
 
-        public void ActivateOrUpdate(string hiddenStyle, Entity entity = default)
+        public void ActivateOrUpdate(string hiddenStyle, StyleBackground style = default, Entity entity = default)
         {
             if (!IsActive) SetActive(true, hiddenStyle);
 
+            if (style != default) m_Element.style.backgroundImage = style;
+            
             if(entity == default) return;
 
             Entity = entity;

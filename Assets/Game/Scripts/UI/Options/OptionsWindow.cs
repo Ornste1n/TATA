@@ -115,7 +115,6 @@ namespace Game.Scripts.UI.Options
         private async Task LoadLocalizeTable()
         {
             _options = await _optionTable.GetTableAsync().Task;
-
             ScreenModeLocalize = new Dictionary<string, FullScreenMode>(3);
 
             foreach (var (fullScreenMode, reference) in _screenModesNames)
@@ -148,8 +147,6 @@ namespace Game.Scripts.UI.Options
             SelectInputSlot = _options.GetEntry(_selectInputSlot.Key)?.GetLocalizedString();
             ConfirmInputSlot = _options.GetEntry(_confirmInputSlot.Key)?.GetLocalizedString();
             InputNewBind = _options.GetEntry(_inputNewBind.Key)?.GetLocalizedString();
-            
-            Debug.Log("Localize all");
         }
 
         private async void SaveChanges(ClickEvent _)

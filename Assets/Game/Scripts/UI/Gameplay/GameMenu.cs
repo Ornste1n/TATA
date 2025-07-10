@@ -1,9 +1,9 @@
-using System.Threading;
 using Unity.Entities;
+using System.Threading;
 using Game.Scripts.Inputs;
 using Game.Scripts.Scenes;
-using Game.Scripts.UI.Options;
 using UnityEngine.UIElements;
+using Game.Scripts.UI.Options;
 
 namespace Game.Scripts.UI.Gameplay
 {
@@ -64,9 +64,15 @@ namespace Game.Scripts.UI.Gameplay
             _continueButton = root.Q<Button>("continue");
 
             _quitButton.clicked += Quit;
+            _saveButton.clicked += SaveGame;
+            _loadButton.clicked += LoadGame;
             _continueButton.clicked += MenuDisable;
         }
 
+        private void SaveGame() {}
+        private void LoadGame() {}
+
+        
         private async void Quit()
         {
             _quitButton.clicked -= Quit;
@@ -79,6 +85,8 @@ namespace Game.Scripts.UI.Gameplay
         public void Disable()
         {
             _quitButton.clicked -= Quit;
+            _saveButton.clicked -= SaveGame;
+            _loadButton.clicked -= LoadGame;
             _inputSystem.OnPaused -= MenuEnable;
             _continueButton.clicked -= MenuDisable;
             _optionsWindow.OnChangeActive -= SetActiveOptions;

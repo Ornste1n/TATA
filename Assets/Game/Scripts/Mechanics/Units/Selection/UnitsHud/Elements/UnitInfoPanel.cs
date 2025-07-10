@@ -1,6 +1,8 @@
+using Unity.Entities;
 using UnityEngine.UIElements;
+using Game.Scripts.Mechanics.Units.General.Components;
 
-namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
+namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud.Elements
 {
     public class UnitInfoPanel
     {
@@ -9,6 +11,9 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
         
         private readonly Label _unitLabel;
         private readonly VisualElement _unitIcon;
+
+        public Entity Entity { get; private set; }
+        public bool IsActive { get; private set; }
         
         public UnitInfoPanel(VisualElement root)
         {
@@ -17,16 +22,20 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             _unitLabel = root.Q<Label>("unit-info-name");
             _unitHealth = root.Q<Label>("unit-info-health");
             _unitIcon = root.Q<VisualElement>("unit-info-icon");
-            
         }
 
-        public void Show(float health, float maxHealth)
+        public void Show(Entity entity, UnitPanelData data, Damageable damageable)
         {
-            _unitHealth.text = $"{health}/{maxHealth}";
+            Entity = entity;
+            _unitLabel.text = data.Name;
+            _unitIcon.style.backgroundImage = data.Image;
+            _unitHealth.text = $"{damageable.Health}/{damageable.MaxHealth}";
         }
         
         public void SetActive(bool active, string hiddenStyle)
         {
+            IsActive = active;
+            
             if(active)
                 m_Panel.RemoveFromClassList(hiddenStyle);
             else

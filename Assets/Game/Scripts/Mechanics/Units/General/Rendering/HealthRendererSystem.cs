@@ -7,6 +7,7 @@ using Game.Scripts.Mechanics.Units.General.Components;
 
 namespace Game.Scripts.Mechanics.Units.General.Rendering
 {
+    [UpdateInGroup(typeof(RenderingUnitsEffectsSystem))]
     public partial class UnitsHealthRendererSystem : SystemBase
     {
         private Mesh _mesh;
@@ -18,6 +19,9 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
         private float _scaleFactor;
         private Camera _mainCamera;
 
+        private NativeArray<float> _fills;
+        private NativeArray<Matrix4x4> _matrices;
+        
         private const int MaxInstancesPerBatch = 1023;
         private static readonly int Fill = Shader.PropertyToID("_Fill");
         private static readonly int MeshSize = Shader.PropertyToID("_MeshSize");
@@ -25,6 +29,8 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
         protected override void OnCreate()
         {
             _materialProperty = new MaterialPropertyBlock();
+            _fills = new NativeArray<float>(MaxInstancesPerBatch, Allocator.Persistent);
+            _matrices = new NativeArray<Matrix4x4>(MaxInstancesPerBatch, Allocator.Persistent);
         }
 
         protected override void OnStartRunning()
@@ -46,62 +52,58 @@ namespace Game.Scripts.Mechanics.Units.General.Rendering
 
         protected override void OnUpdate()
         {
-            NativeList<Matrix4x4> matrices = new NativeList<Matrix4x4>(64, Allocator.Temp);
-            NativeList<float> fills = new NativeList<float>(64, Allocator.Temp);
-
             float2 offset = _offset;
-            Camera camera = _mainCamera;
             float3 minSize = _minSize;
+            Camera camera = _mainCamera;
             float scaleFactor = _scaleFactor;
 
             Vector3 cameraPosition = camera.transform.position;
             Vector3 cameraRotation = camera.transform.rotation.eulerAngles;
             Quaternion barRotation = Quaternion.Euler(cameraRotation);
 
-            float barScaleFactor = Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad * 0.5f);
+            float barScaleFactor = math.tan(camera.fieldOfView * Mathf.Deg2Rad * 0.5f);
+
+            int count = 0;
+            NativeArray<float> fills = _fills;
+            NativeArray<Matrix4x4> matrices = _matrices;
             
             foreach (UnitAspect unit in SystemAPI.Query<UnitAspect>())
             {
                 Damageable damageable = unit.Damageable;
-                float fill = damageable.Health / damageable.MaxHealth;
 
                 Vector3 barPosition = unit.Transform.Position;
                 barPosition.x += offset.x;
                 barPosition.y += offset.y;
 
-                float distance = Vector3.Distance(cameraPosition, barPosition);
-                float3 scale = distance * Vector3.one * barScaleFactor * scaleFactor;
+                float distance = math.distance(cameraPosition, barPosition);
+                float3 scale = math.max(distance * Vector3.one * barScaleFactor * scaleFactor, minSize);
+                
+                fills[count] = damageable.Health / damageable.MaxHealth;
+                matrices[count++] = Matrix4x4.TRS(barPosition, barRotation, scale);
 
-                if (scale.x < minSize.x || scale.y < minSize.y)
-                    scale = minSize;
+                if (count != MaxInstancesPerBatch) continue;
                 
-                Matrix4x4 matrix4X4 = Matrix4x4.TRS(barPosition, barRotation, scale);
-                
-                fills.Add(fill);
-                matrices.Add(matrix4X4);
-                
-                if (matrices.Length == MaxInstancesPerBatch)
-                    DrawHealthBatch(matrices, fills);
+                DrawHealthBatch(matrices, fills);
+                count = 0;
             }
 
             if(matrices.Length > 0)
                 DrawHealthBatch(matrices, fills);
-
-            fills.Dispose();
-            matrices.Dispose();
         }
 
-        private void DrawHealthBatch(NativeList<Matrix4x4> matrices, NativeList<float> fills)
+        private void DrawHealthBatch(NativeArray<Matrix4x4> matrices, NativeArray<float> fills)
         {
             _materialProperty.Clear();
-            _materialProperty.SetFloatArray(Fill, fills.AsArray().ToArray());
+            _materialProperty.SetFloatArray(Fill, fills.ToArray());
 
-            RenderParams rp = new RenderParams(_healthBarMaterial) { matProps = _materialProperty };
+            RenderParams render = new RenderParams(_healthBarMaterial) { matProps = _materialProperty };
+            Graphics.RenderMeshInstanced(render, _mesh, 0, matrices, matrices.Length);
+        }
 
-            Graphics.RenderMeshInstanced(rp, _mesh, 0, matrices.AsArray().ToArray(), matrices.Length);
-            
-            matrices.Clear();
-            fills.Clear();
+        protected override void OnDestroy()
+        {
+            _fills.Dispose();
+            _matrices.Dispose();
         }
     }
 }

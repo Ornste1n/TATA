@@ -46,8 +46,6 @@ namespace Game.Scripts.UI.Options
         
         public GraphicsPanel(OptionsWindow window, string name, string button) : base(window, name, button)
         {
-            Debug.Log("Constructor");
-            
             Resolution();
             DisplayMode();
             Vsync();
