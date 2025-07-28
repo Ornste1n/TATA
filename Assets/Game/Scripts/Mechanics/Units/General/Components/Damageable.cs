@@ -1,7 +1,9 @@
 using Unity.Entities;
+using Game.Scripts.SaveSystems.Components;
 
 namespace Game.Scripts.Mechanics.Units.General.Components
 {
+    [Save]
     public struct Damageable : IComponentData
     {
         public readonly float Health;
@@ -19,5 +21,10 @@ namespace Game.Scripts.Mechanics.Units.General.Components
         public readonly uint Id;
 
         public UnitId(uint id) => Id = id;
+    }
+
+    public struct UnitPrefabReference : IBufferElementData
+    {
+        public Entity Prefab;
     }
 }

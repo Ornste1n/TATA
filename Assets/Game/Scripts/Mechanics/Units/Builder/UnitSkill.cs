@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using NaughtyAttributes;
+using CustomInspector;
 using Game.Scripts.Extension.Mono;
 
 namespace Game.Scripts.Mechanics.Units.Builder
@@ -8,9 +8,13 @@ namespace Game.Scripts.Mechanics.Units.Builder
     [CreateAssetMenu(menuName = "Units/Create Unit Skill")]
     public class UnitSkill : ScriptableObject
     {
-        [SerializeField] private SerializableMonoScript<SkillBase> _skill;
-        
-        [ShowAssetPreview]
+        [Preview]
         [SerializeField] private Sprite _icon;
+
+        [SerializeField] private SerializableMonoScript<SkillBase> script;
+        
+        public Sprite Icon => _icon;
+        public Type SkillType => script.Type;
     }
+    
 }

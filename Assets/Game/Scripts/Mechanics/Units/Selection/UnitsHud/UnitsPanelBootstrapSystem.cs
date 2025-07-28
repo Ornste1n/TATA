@@ -1,10 +1,7 @@
-using UnityEngine;
 using Unity.Entities;
 using UnityEngine.UIElements;
 using Game.Scripts.UI.Gameplay;
 using System.Collections.Generic;
-using UnityEngine.Localization.Tables;
-using UnityEngine.Localization.Settings;
 using Game.Scripts.Mechanics.Units.General.Components;
 using Game.Scripts.Mechanics.Units.General.Initialize;
 using Game.Scripts.Mechanics.Units.Selection.UnitsHud.Elements;
@@ -19,94 +16,102 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
         {
             RequireForUpdate<MainCanvasData>();
             RequireForUpdate<UnitsPanelData>();
-            RequireForUpdate<UnitsLocalizationTable>();
         }
-    
+
         protected override void OnUpdate()
         {
             MainCanvasData documentData = SystemAPI.GetSingleton<MainCanvasData>();
             UnitsPanelData unitsData = SystemAPI.GetSingleton<UnitsPanelData>();
 
-            VisualTreeAsset unitAsset = unitsData.UnitViewPrefab.Value;
-            VisualTreeAsset pageAsset = unitsData.UnitPagePrefab.Value;
-            VisualTreeAsset skillAsset = unitsData.UnitSkillPrefab.Value;
-            
             VisualElement root = documentData.Document.Value.rootVisualElement;
-            
+
             VisualElement unitsPanel = root.Q<VisualElement>("units-main");
             VisualElement pageList = root.Q<VisualElement>("units-page-list");
             VisualElement unitsContainer = unitsPanel.Q<VisualElement>("units-container");
-            
             VisualElement instrumentsPanel = root.Q<VisualElement>("instruments-panel");
             VisualElement skillsContent = instrumentsPanel.Q<VisualElement>("skills-content");
-                
-            UnitView[] unitBuffer = new UnitView[unitsData.UnitsCount];
-            VisualElement[] pages = new VisualElement[unitsData.PageCount];
-            
-            for (int i = 0; i < unitsData.UnitsCount; i++)
+
+            VisualElement[] pages = BuildPages(unitsData, pageList);
+            UnitView[] unitBuffer = BuildUnits(unitsData, unitsContainer);
+            SkillView[] skillViews = BuildSkills(unitsData, skillsContent);
+
+            UnitInfoPanel infoPanel = new UnitInfoPanel(unitsPanel);
+            InstrumentsPanel instPanel = new InstrumentsPanel(instrumentsPanel, skillViews);
+            Dictionary<uint, StyleBackground> spriteMap = GetAndClearSprites();
+
+            UnitsPanelSystem system = World.GetExistingSystemManaged<UnitsPanelSystem>();
+            system.Initialize(spriteMap, unitsContainer, infoPanel, instPanel, pages, unitBuffer);
+
+            Enabled = false;
+        }
+
+        private UnitView[] BuildUnits(UnitsPanelData data, VisualElement container)
+        {
+            UnitView[] unitBuffer = new UnitView[data.UnitsCount];
+            VisualTreeAsset unitAsset = data.UnitViewPrefab.Value;
+
+            for (int i = 0; i < data.UnitsCount; i++)
             {
                 TemplateContainer unitTemplate = unitAsset.Instantiate();
                 VisualElement unitView = unitTemplate.Q<VisualElement>("unit");
 
                 unitBuffer[i] = new UnitView(unitView);
-                unitsContainer.Add(unitView);
+                container.Add(unitView);
             }
 
-            for (int i = 0; i < unitsData.PageCount; i++)
+            return unitBuffer;
+        }
+
+        private VisualElement[] BuildPages(UnitsPanelData data, VisualElement container)
+        {
+            VisualElement[] pages = new VisualElement[data.PageCount];
+            VisualTreeAsset pageAsset = data.UnitPagePrefab.Value;
+
+            for (int i = 0; i < data.PageCount; i++)
             {
                 TemplateContainer template = pageAsset.Instantiate();
                 VisualElement page = template.Q<VisualElement>("unit-page");
-                
+
                 page.Q<Label>("page-number").text = $"{i + 1}";
                 page.AddToClassList("hidden");
-                pageList.Add(page);
-                
+                container.Add(page);
+
                 pages[i] = page;
             }
 
-            for (int i = 0; i < unitsData.SkillCount; i++)
+            return pages;
+        }
+
+        private SkillView[] BuildSkills(UnitsPanelData data, VisualElement container)
+        {
+            SkillView[] skills = new SkillView[data.SkillCount];
+            VisualTreeAsset skillAsset = data.UnitSkillPrefab.Value;
+
+            for (int i = 0; i < data.SkillCount; i++)
             {
                 TemplateContainer template = skillAsset.Instantiate();
                 VisualElement unitView = template.Q<VisualElement>("unit-skill");
+                container.Add(unitView);
 
-                //unitBuffer[i] = new UnitView(unitView);
-                skillsContent.Add(unitView);
+                skills[i] = new SkillView(unitView);
             }
             
-            UnitInfoPanel infoPanel = new UnitInfoPanel(unitsPanel);
-            UnitsPanelSystem system = World.GetExistingSystemManaged<UnitsPanelSystem>();
-
-            UnitsLocalizationTable table = SystemAPI.GetSingleton<UnitsLocalizationTable>();
-            StringTable localTable = LocalizationSettings.StringDatabase.GetTable(table.Key.ToString());
-            
-            Entity catalogEntity = SystemAPI.GetSingletonEntity<UnitsCatalogBlobRef>();
-            BlobAssetReference<UnitBlobRoot> blobRef = SystemAPI.GetSingleton<UnitsCatalogBlobRef>().Catalog;
-            ref UnitBlobRoot blob = ref blobRef.Value;
-
-            DynamicBuffer<UnitSpriteCatalogElement> icons = SystemAPI.GetBuffer<UnitSpriteCatalogElement>(catalogEntity);
-            Dictionary<uint, UnitPanelData> unitPanels = new Dictionary<uint, UnitPanelData>(blob.Units.Length);
-            
-            for (int i = 0; i < blob.Units.Length; i++)
-            {
-                ref readonly UnitBlob unit = ref blob.Units[i];
-                Sprite sprite = icons[unit.IconIndex].Sprites.Value;
-                StringTableEntry entry = localTable.GetEntry(unit.NameKey.Value);
-                
-                unitPanels.TryAdd(unit.Id, new UnitPanelData()
-                {
-                    Name = entry.GetLocalizedString(),
-                    Image = new StyleBackground(sprite),
-                });
-            }
-            
-            system.Initialize(unitPanels, unitsContainer, infoPanel, pages, unitBuffer);
-            Enabled = false;
+            return skills;
         }
-    }
 
-    public class UnitPanelData
-    {
-        public string Name;
-        public StyleBackground Image;
+        private Dictionary<uint, StyleBackground> GetAndClearSprites()
+        {
+            Entity catalogEntity = SystemAPI.GetSingletonEntity<UnitsCatalogBlobRef>();
+            DynamicBuffer<UnitSpriteCatalogElement> unitsSprites = SystemAPI.GetBuffer<UnitSpriteCatalogElement>(catalogEntity);
+
+            Dictionary<uint, StyleBackground> sprites = new(unitsSprites.Length);
+            for (int i = 0; i < unitsSprites.Length; i++)
+            {
+                sprites.Add(unitsSprites[i].UnitId, new StyleBackground(unitsSprites[i].Sprite.Value));
+            }
+
+            EntityManager.RemoveComponent<UnitSpriteCatalogElement>(catalogEntity);
+            return sprites;
+        }
     }
 }

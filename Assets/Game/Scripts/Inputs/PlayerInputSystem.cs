@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Game.Scripts.UI.Gameplay;
+using Game.Scripts.WorldSettings;
 using Game.Scripts.Inputs.Components;
 
 namespace Game.Scripts.Inputs
@@ -18,12 +19,14 @@ namespace Game.Scripts.Inputs
         private UIDocument _mainDocument;
         
         #region Mouse
+        private const float DragDistanceThreshold = 5f;
+        private const float RaycastDistance = 150f;
+        
         private bool _dragging;
         private Vector2 _startSelectionPosition;
-        private static readonly float DragDistanceThreshold = 5f;
-        private static readonly Plane GroundPlane = new(Vector3.up, Vector3.zero);
-        
+
         public Action OnMouseEndDrag;
+        public Action<float3> OnMouseClick;
         public Action<Vector2> OnMouseBeginDrag;
         #endregion
         
@@ -39,7 +42,7 @@ namespace Game.Scripts.Inputs
             EntityManager.AddComponent<InputData>(_entityInput);
 
             RequireForUpdate<MainCanvasData>();
-            RequireForUpdate<CameraInputComponent>();
+            RequireForUpdate<MouseInputComponent>();
         }
 
         protected override void OnStartRunning()
@@ -53,39 +56,54 @@ namespace Game.Scripts.Inputs
 
         protected override void OnUpdate()
         {
-            ReadSelectionMouse();
-            ReadCameraInput();
+            ReadMouse();
             ReadUIInput();
         }
         
-        private void ReadSelectionMouse()
+        private void ReadMouse()
+        {
+            Vector2 currentMousePos = Mouse.current.position.value;
+            MyControls.CameraActions cameraActions = _controls.Camera;
+            
+            ref MouseInputComponent input = ref SystemAPI.GetSingletonRW<MouseInputComponent>().ValueRW;
+            
+            input.WorldMousePosition = GetWorldPosition(currentMousePos, out Ray ray);
+            input.ViewMousePosition = _mainCamera.ScreenToViewportPoint(currentMousePos); 
+            input.ScreenToWorldRay = ray;
+            
+            input.Direction = ReadCameraScrollButtons(cameraActions);
+            input.OnDragScroll = cameraActions.DragScroll.IsPressed();
+            
+            ReadMouseInput(currentMousePos, input.WorldMousePosition);
+        }
+        
+        private void ReadMouseInput(float2 currentMousePos, float3 worldPosition)
         {
             InputAction selection = _controls.Units.Selection;
             
             if (selection.WasPressedThisFrame())
-            {
-                _startSelectionPosition = Mouse.current.position.value;
-            }
+                _startSelectionPosition = currentMousePos;
 
             if (selection.IsPressed())
             {
-                float distance = Vector2.Distance(_startSelectionPosition, Mouse.current.position.value);
+                float distance = Vector2.Distance(_startSelectionPosition, currentMousePos);
 
                 if (_dragging || !(distance > DragDistanceThreshold)) return;
                 
                 _dragging = true;
-                OnMouseBeginDrag?.Invoke(Mouse.current.position.value);
+                OnMouseBeginDrag?.Invoke(currentMousePos);
             }
 
             if (!selection.WasCompletedThisFrame()) return;
             
-            Vector2 currentMousePos = Mouse.current.position.value;
 
             if (!_dragging)
             {
-                if(!IsPointerOverUI())
-                    EntityManager.AddComponentData(_entityInput, new ClickMouseEvent(GetWorldPosition(currentMousePos)));
+                if (IsPointerOverUI()) return;
                 
+                OnMouseClick?.Invoke(worldPosition);
+                EntityManager.AddComponentData(_entityInput, new ClickMouseEvent());
+
                 return;
             }
             
@@ -107,18 +125,6 @@ namespace Game.Scripts.Inputs
             float3 rightBottom = GetWorldPosition(new Vector2(maxX, minY));
                 
             EntityManager.AddComponentData(_entityInput, new EndDragEvent(leftTop, leftBottom, rightTop, rightBottom));
-        }
-        
-        private void ReadCameraInput()
-        {
-            MyControls.CameraActions cameraActions = _controls.Camera;
-            
-            ref CameraInputComponent input = ref SystemAPI.GetSingletonRW<CameraInputComponent>().ValueRW;
-            
-            input.Direction = ReadCameraScrollButtons(cameraActions);
-            input.OnDragScroll = cameraActions.DragScroll.IsPressed();
-            input.WorldMousePosition = GetWorldPosition(Mouse.current.position.value); // todo один раз кешировать Mouse position для всех методов
-            input.ViewMousePosition = _mainCamera.ScreenToViewportPoint(Mouse.current.position.value); // todo заменить на world position
         }
         
         private void ReadUIInput()
@@ -162,12 +168,21 @@ namespace Game.Scripts.Inputs
         private float3 GetWorldPosition(Vector3 position)
         {
             Ray ray = _mainCamera.ScreenPointToRay(position);
+
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, RaycastDistance, 1 << (int)WorldLayers.Ground))
+                return hitInfo.point;
             
-            if(!GroundPlane.Raycast(ray, out float distance)) return float3.zero;
+            return float3.zero;
+        }
 
-            Vector3 worldVector = ray.GetPoint(distance);
+        private float3 GetWorldPosition(Vector3 position, out Ray ray)
+        { 
+            ray = _mainCamera.ScreenPointToRay(position);
 
-            return new float3(worldVector.x, worldVector.y, worldVector.z);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, RaycastDistance, 1 << (int)WorldLayers.Ground))
+                return hitInfo.point;
+            
+            return float3.zero;
         }
     }
 }

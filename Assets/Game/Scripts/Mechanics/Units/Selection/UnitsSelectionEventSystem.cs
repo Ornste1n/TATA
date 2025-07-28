@@ -5,6 +5,7 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Mathematics;
 using IJob = Unity.Jobs.IJob;
+using Game.Scripts.WorldSettings;
 using Game.Scripts.Inputs.Components;
 using Collider = Unity.Physics.Collider;
 using RaycastHit = Unity.Physics.RaycastHit;
@@ -22,23 +23,25 @@ namespace Game.Scripts.Mechanics.Units.Selection
             state.EntityManager.AddComponentData(singleton, new LastSelectedUnit { Value = Entity.Null });
             
             state.RequireForUpdate<LastSelectedUnit>();
-            state.RequireForUpdate<CameraInputComponent>();
+            state.RequireForUpdate<MouseInputComponent>();
             state.RequireForUpdate<PhysicsWorldSingleton>();
         }
 
         public void OnUpdate(ref SystemState state)
         {
-            CameraInputComponent input = SystemAPI.GetSingleton<CameraInputComponent>();
+            MouseInputComponent input = SystemAPI.GetSingleton<MouseInputComponent>();
             CollisionWorld physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-
-            float3 startPos = input.WorldMousePosition + new float3(0, 10, 0);
-            float3 endPos = input.WorldMousePosition;
 
             RaycastInput rayInput = new()
             {
-                End = endPos,
-                Start = startPos,
-                Filter = CollisionFilter.Default
+                End = input.WorldMousePosition,
+                Start = input.ScreenToWorldRay.origin,
+                Filter = new CollisionFilter
+                {
+                    BelongsTo = 1u << (int)WorldLayers.Unit,
+                    CollidesWith = 1u << (int)WorldLayers.Unit,
+                    GroupIndex = 0
+                }
             };
 
             Entity selSingleton = SystemAPI.GetSingletonEntity<LastSelectedUnit>();
@@ -78,6 +81,7 @@ namespace Game.Scripts.Mechanics.Units.Selection
             
             state.RequireAnyForUpdate(query);
             state.RequireForUpdate<InputData>();
+            state.RequireForUpdate<MouseInputComponent>();
             state.RequireForUpdate<PhysicsWorldSingleton>();
         }
 
@@ -85,10 +89,10 @@ namespace Game.Scripts.Mechanics.Units.Selection
         public void OnUpdate(ref SystemState state)
         {
             Entity entity = SystemAPI.GetSingletonEntity<InputData>();
-            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+            EntityCommandBuffer ecb = new(Allocator.Temp);
             
             CollisionWorld collisions = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            NativeList<Entity> entitiesToDeselect = new NativeList<Entity>(16, Allocator.TempJob);
+            NativeList<Entity> entitiesToDeselect = new(16, Allocator.TempJob);
             
             NativeArray<Entity> unitsSelected = SystemAPI.QueryBuilder()
                 .WithAll<UnitSelectionTag>()
@@ -97,10 +101,9 @@ namespace Game.Scripts.Mechanics.Units.Selection
             if (SystemAPI.HasComponent<EndDragEvent>(entity))
             {
                 NativeList<Entity> entitiesToSelect = default;
-                
                 EndDragEvent data = SystemAPI.GetComponentRO<EndDragEvent>(entity).ValueRO;
                 
-                NativeArray<float3> points = new NativeArray<float3>(4, Allocator.TempJob)
+                NativeArray<float3> points = new(4, Allocator.TempJob)
                 {
                     [0] = data.LeftBottom,
                     [1] = data.LeftTop,
@@ -110,7 +113,7 @@ namespace Game.Scripts.Mechanics.Units.Selection
                 
                 entitiesToSelect = new NativeList<Entity>(16, Allocator.TempJob);
                 
-                UnitBoxCast castJob = new UnitBoxCast()
+                UnitBoxCast castJob = new()
                 {
                     Points = points,
                     Collisions = collisions,
@@ -144,21 +147,17 @@ namespace Game.Scripts.Mechanics.Units.Selection
             
             if (SystemAPI.HasComponent<ClickMouseEvent>(entity))
             {
-                ClickMouseEvent data = SystemAPI.GetComponentRO<ClickMouseEvent>(entity).ValueRO;
-                NativeReference<Entity> castEntity = new NativeReference<Entity>(Entity.Null, Allocator.TempJob);
+                MouseInputComponent mouseInput = SystemAPI.GetSingleton<MouseInputComponent>();
+                NativeReference<Entity> castEntity = new(Entity.Null, Allocator.TempJob);
 
-                float3 startPosition = data.WorldPosition;
-                float3 endPosition = startPosition;
-                startPosition.y += 10;
-                
-                UnitRayCast unitRayCast = new UnitRayCast()
+                UnitRayCast unitRayCast = new()
                 {
-                    End = endPosition,
-                    Start = startPosition,
                     Collisions = collisions,
                     ClosestEntity = castEntity,
                     SelectedEntities = unitsSelected,
                     EntitiesToDeselect = entitiesToDeselect,
+                    End = mouseInput.WorldMousePosition,
+                    Start = mouseInput.ScreenToWorldRay.origin,
                     SelectionComponent = SystemAPI.GetComponentLookup<UnitSelectionTag>(true)
                 };
                 
@@ -217,10 +216,15 @@ namespace Game.Scripts.Mechanics.Units.Selection
             (
                 Points,
                 new ConvexHullGenerationParameters(),
-                CollisionFilter.Default
+                new CollisionFilter
+                {
+                    BelongsTo = 1u << (int)WorldLayers.Unit,
+                    CollidesWith = 1u << (int)WorldLayers.Unit,
+                    GroupIndex = 0
+                }
             );
 
-            ColliderCastInput castInput = new ColliderCastInput()
+            ColliderCastInput castInput = new()
             {
                 Collider = (Collider*) collider.GetUnsafePtr(),
                 Start = new float3(0, 10f, 0),
@@ -229,7 +233,7 @@ namespace Game.Scripts.Mechanics.Units.Selection
                 Orientation = quaternion.identity,
             };
 
-            OverlapCollector collector = new OverlapCollector(16, Allocator.TempJob);
+            OverlapCollector collector = new(16, Allocator.TempJob);
 
             if (!Collisions.CastCollider(castInput, ref collector))
             {
@@ -238,7 +242,7 @@ namespace Game.Scripts.Mechanics.Units.Selection
                 return;
             }
             
-            NativeList<Entity> newSelection = new NativeList<Entity>(collector.Hits.Length, Allocator.TempJob);
+            NativeList<Entity> newSelection = new(collector.Hits.Length, Allocator.TempJob);
 
             for (int i = 0; i < collector.Hits.Length; i++)
             {
@@ -280,11 +284,16 @@ namespace Game.Scripts.Mechanics.Units.Selection
         [BurstCompile]
         public void Execute()
         {
-            RaycastInput raycastInput = new RaycastInput()
+            RaycastInput raycastInput = new()
             {
                 End = End,
                 Start = Start,
-                Filter = CollisionFilter.Default,
+                Filter = new CollisionFilter
+                {
+                    BelongsTo = 1u << (int)WorldLayers.Unit,
+                    CollidesWith = 1u << (int)WorldLayers.Unit,
+                    GroupIndex = 0
+                }
             };
             
             if(!Collisions.CastRay(raycastInput, out RaycastHit closestHit)) return;

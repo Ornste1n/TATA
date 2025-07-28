@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/Base/GeneralStyle.uss?fileID=7433441132597879392&amp;guid=9c5de81272107724aa1dfa078daba55f&amp;type=3#GeneralStyle" />
+    <ui:VisualElement name="panel" style="flex-grow: 1; width: 350px; height: 450px;">
+        <ui:TextField label="Width" name="width" />
+        <ui:TextField label="Height" name="height" />
+        <ui:EnumField label="Graphics Format" value="Center" type="UnityEngine.RenderTextureFormat, UnityEngine.CoreModule" name="format" />
+        <ui:TextField label="Depth" name="depth" />
+        <ui:TextField label="Mip Count" name="mip-count" />
+        <ui:Button text="Обновить настройки" name="update" style="bottom: 0; position: absolute; width: 100%; height: 30px;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,6 +1,6 @@
-using Game.Scripts.Mechanics.Units.Builder;
 using UnityEngine;
 using Unity.Entities;
+using Game.Scripts.Mechanics.Units.Builder;
 using Game.Scripts.Mechanics.Units.General.Components;
 
 namespace Game.Scripts.Mechanics.Units.General

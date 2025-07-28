@@ -2,7 +2,9 @@ using System;
 using Unity.Entities;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using Game.Scripts.Extension.ECS;
 using Game.Scripts.Mechanics.Units.General;
+using Game.Scripts.Mechanics.Units.General.Components;
 using Game.Scripts.Mechanics.Units.Selection.UnitsHud.Elements;
 
 namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
@@ -12,40 +14,52 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
     {
         private const string HiddenStyle = "hidden";
         private const string SelectedPage = "unitsPageSelected";
-        
+
+        #region Visual Elements
+
         private bool _initialized;
-        private UnitView[] _unitViews;
-        private VisualElement[] _unitPages;
-        
-        private Dictionary<uint, UnitPanelData> _unitData;
-        
-        private UnitInfoPanel _unitInfoPanel;
-        private VisualElement _unitsSelected;
-        private VisualElement _unitsContainer;
-        
         private int _activePages;
         private int _currentActive;
         private int _currentPageIndex;
+        
+        private UnitView[] _unitViews;
+        private VisualElement[] _unitPages;
+        
+        private UnitInfoPanel _unitInfoPanel;
+        private InstrumentsPanel _instrumentsPanel;
+        
+        private VisualElement _unitsSelected;
+        private VisualElement _unitsContainer;
+
+        #endregion
+
+        #region Events
+
+        public Action<int> TriedUseSkill;
+
+        #endregion
+        
+        #region Resoureces
+
+        private BlobAssetReference<UnitBlobRoot> _unitsBlob;
+        private Dictionary<uint, StyleBackground> _unitsSprites;
+
+        #endregion
         
         protected override void OnCreate()
         {
             RequireForUpdate<UnitsSelectedEvent>();
         }
-        
-        public void Initialize
-        (
-            Dictionary<uint, UnitPanelData> data,
-            VisualElement container, 
-            UnitInfoPanel infoPanel, 
-            VisualElement[] pages, 
-            UnitView[] views
-        )
+
+        public void Initialize(Dictionary<uint, StyleBackground> sprites, VisualElement container,
+            UnitInfoPanel infoPanel, InstrumentsPanel instPanel, VisualElement[] pages, UnitView[] views)
         {
-            _unitData = data;
             _unitViews = views;
             _unitPages = pages;
+            _unitsSprites = sprites;
             _unitInfoPanel = infoPanel;
             _unitsContainer = container;
+            _instrumentsPanel = instPanel;
             _unitsSelected = container.parent;
             
             foreach (UnitView view in views)
@@ -55,7 +69,9 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
                 page.RegisterCallback<ClickEvent>(ChangeListElement);
             
             _initialized = true;
+            instPanel.SubscribesSkills(TriedUseSkill);
             container.RegisterCallback<ClickEvent>(HandleUnitViewEvent);
+            _unitsBlob = SystemAPI.GetSingleton<UnitsCatalogBlobRef>().Catalog;
         }
         
         protected override void OnUpdate()
@@ -80,8 +96,8 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
                 ShowUnitView(0);
                 return;
             }
-            
-            if(_unitInfoPanel.IsActive)
+
+            if (_unitInfoPanel.IsActive)
                 SetActiveInfoPanel(false);
             
             if (page < activePages)
@@ -102,14 +118,15 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             
             int i = 0;
             int maxUnitsCount = unitViews.Length;
-            Dictionary<uint, UnitPanelData> unitPanelS = _unitData;
-
+            
+            Dictionary<uint, StyleBackground> sprites = _unitsSprites;
+            
             foreach ((UnitAspect Aspect, RefRW<UnitSelectionTag> Tag) unit in SystemAPI.Query<UnitAspect, RefRW<UnitSelectionTag>>())
             {
                 unit.Tag.ValueRW.Group = page;
 
                 if (page == 0)
-                    unitViews[i++].ActivateOrUpdate(hiddenStyle, unitPanelS[unit.Aspect.Id].Image, unit.Aspect.Entity);
+                    unitViews[i++].ActivateOrUpdate(hiddenStyle, sprites[unit.Aspect.Id], unit.Aspect.Entity);
 
                 if (i != maxUnitsCount) continue;
                 
@@ -140,18 +157,34 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             if(_unitInfoPanel.IsActive && _unitInfoPanel.Entity == entity) return;
             
             UnitAspect unit = SystemAPI.GetAspect<UnitAspect>(entity);
+            ref UnitBlobRoot blobRoot = ref _unitsBlob.Value;
+
+            if (!BlobUtility.TryGetUnit(ref blobRoot, unit.Id, out UnitBlob blob)) return;
+
+            Entity entityBuffer = SystemAPI.GetSingletonEntity<SkillSpriteCatalogElement>();
+            DynamicBuffer<SkillSpriteCatalogElement> skills = SystemAPI.GetBuffer<SkillSpriteCatalogElement>(entityBuffer);
+
+            if (blob.StartSkillBaseIndex != -1)
+                _instrumentsPanel.ActiveSkills(skills, blob.StartSkillBaseIndex, blob.EndSkillBaseIndex);
+            else
+                _instrumentsPanel.DisableSkills();
             
-            _unitInfoPanel.Show(entity, _unitData[unit.Id], unit.Damageable);
+            _unitInfoPanel.Show(entity, blob.LocalizeName.ToString(), _unitsSprites[unit.Id], unit.Damageable);
             SetActiveInfoPanel(true);
         }
 
         private void SetActiveInfoPanel(bool active)
         {
             _unitInfoPanel.SetActive(active, HiddenStyle);
-            if(active)
+            if (active)
+            {
                 _unitsSelected.AddToClassList(HiddenStyle);
+            }
             else
+            {
+                _instrumentsPanel.DisableSkills();
                 _unitsSelected.RemoveFromClassList(HiddenStyle);
+            }
         }
         
         private void ChangeListElement(ClickEvent clickEvent)
@@ -165,21 +198,21 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             string hiddenStyle = HiddenStyle;
             int activeCount = _currentActive;
             UnitView[] unitViews = _unitViews;
-            Dictionary<uint, UnitPanelData> unitPanel = _unitData;
+           
+            Dictionary<uint, StyleBackground> sprites = _unitsSprites;
             
             foreach ((UnitAspect Aspect, RefRO<UnitSelectionTag> Tag) unit in SystemAPI.Query<UnitAspect, RefRO<UnitSelectionTag>>())
             {
                 if(unit.Tag.ValueRO.Group != index) continue;
-
-                unitViews[i].ActivateOrUpdate(hiddenStyle, unitPanel[unit.Aspect.Id].Image, unit.Aspect.Entity);
-                i++;
+                
+                unitViews[i++].ActivateOrUpdate(hiddenStyle, sprites[unit.Aspect.Id], unit.Aspect.Entity);
             }
 
             _currentActive = i;
             _currentPageIndex = index;
 
             if (i > activeCount) return;
-            
+
             DeactivateUnits(unitViews, HiddenStyle, i, activeCount);
         }
 
@@ -232,6 +265,7 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud
             foreach (VisualElement page in _unitPages)
                 page.UnregisterCallback<ClickEvent>(ChangeListElement);
             
+            _instrumentsPanel.Dispose();
             _unitsContainer.UnregisterCallback<ClickEvent>(HandleUnitViewEvent);
         }
     }

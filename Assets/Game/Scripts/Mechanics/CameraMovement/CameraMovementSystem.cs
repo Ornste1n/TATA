@@ -46,13 +46,13 @@ namespace Game.Scripts.Mechanics.CameraMovement
         {
             state.RequireForUpdate<CameraMoveSettingsData>();
             state.RequireForUpdate<CameraPositionComponent>();
-            state.RequireForUpdate<CameraInputComponent>();
+            state.RequireForUpdate<MouseInputComponent>();
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            CameraInputComponent input = SystemAPI.GetSingleton<CameraInputComponent>();
+            MouseInputComponent input = SystemAPI.GetSingleton<MouseInputComponent>();
             CameraMoveSettingsData settings = SystemAPI.GetSingleton<CameraMoveSettingsData>();
             ref CameraPositionComponent cameraPosition = ref SystemAPI.GetSingletonRW<CameraPositionComponent>().ValueRW;
 
@@ -115,7 +115,7 @@ namespace Game.Scripts.Mechanics.CameraMovement
             EntityManager gameManager = EntityManager;
             Entity entity = gameManager.CreateEntity();
             
-            gameManager.AddComponent<CameraInputComponent>(entity);
+            gameManager.AddComponent<MouseInputComponent>(entity);
             gameManager.AddComponent<CameraPositionComponent>(entity);
 
 #if !UNITY_EDITOR

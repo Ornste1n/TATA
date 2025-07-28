@@ -24,11 +24,11 @@ namespace Game.Scripts.Mechanics.Units.Selection.UnitsHud.Elements
             _unitIcon = root.Q<VisualElement>("unit-info-icon");
         }
 
-        public void Show(Entity entity, UnitPanelData data, Damageable damageable)
+        public void Show(Entity entity, string name, StyleBackground image, Damageable damageable)
         {
             Entity = entity;
-            _unitLabel.text = data.Name;
-            _unitIcon.style.backgroundImage = data.Image;
+            _unitLabel.text = name;
+            _unitIcon.style.backgroundImage = image;
             _unitHealth.text = $"{damageable.Health}/{damageable.MaxHealth}";
         }
         

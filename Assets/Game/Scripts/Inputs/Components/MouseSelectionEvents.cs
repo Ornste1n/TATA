@@ -6,12 +6,12 @@ namespace Game.Scripts.Inputs.Components
 {
     public struct ClickMouseEvent : IComponentData
     {
-        public readonly float3 WorldPosition;
+        /*public readonly float3 WorldPosition;
 
         public ClickMouseEvent(float3 worldPosition)
         {
             WorldPosition = worldPosition;
-        }
+        }*/
     }
 
     public struct EndDragEvent : IComponentData

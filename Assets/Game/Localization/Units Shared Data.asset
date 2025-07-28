@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: Units.Headquarters
     m_Metadata:
       m_Items: []
+  - m_Id: 9060381799100416
+    m_Key: Units.Barrack
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

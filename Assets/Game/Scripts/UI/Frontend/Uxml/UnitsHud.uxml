@@ -1,17 +1,16 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/UnitsHudStyle.uss?fileID=7433441132597879392&amp;guid=9e5c953c7e7a7b7489c23ff84051b006&amp;type=3#UnitsHudStyle" />
+    <Style src="project://database/Assets/Game/Scripts/UI/Frontend/Uss/Base/GeneralStyle.uss?fileID=7433441132597879392&amp;guid=9c5de81272107724aa1dfa078daba55f&amp;type=3#GeneralStyle" />
     <ui:VisualElement name="units-main" class="unitsMainPanel" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="units-selected" class="unitsSelected" style="flex-grow: 1; flex-direction: row;">
             <ui:VisualElement name="units-page-list" class="unitsPageList" />
             <ui:VisualElement name="units-container" picking-mode="Ignore" class="unitsContainerPanel" />
         </ui:VisualElement>
-        <ui:VisualElement name="unit-info" class="unitInfoPanel hidden" style="flex-grow: 1;">
-            <ui:VisualElement name="unit-info-main" class="unitsInfoMain">
-                <ui:VisualElement name="unit-info-icon" class="unitInfoIcon" />
-                <ui:Label text="1500/200" name="unit-info-health" class="unityInfoHealth" />
-            </ui:VisualElement>
+        <ui:VisualElement name="unit-info" class="unitInfoPanel hidden">
+            <ui:VisualElement name="unit-info-icon" class="unitInfoIcon" style="background-image: url(&quot;project://database/Assets/Game/Source/UI/Generated%20Icon/headquaters.png?fileID=21300000&amp;guid=0fa7187fdf9e7b14bbaa058214bfcf63&amp;type=3#headquaters&quot;);" />
             <ui:VisualElement name="unit-info-add" class="unitsInfoAdd">
-                <ui:Label text="Name&#10;" name="unit-info-name" style="color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); font-size: 45px; -unity-text-align: upper-center;" />
+                <ui:Label text="Name&#10;" name="unit-info-name" style="color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Game/Source/Fonts/Philosopher/Base/Philosopher-Regular.ttf?fileID=12800000&amp;guid=c9aa17607b988c240b8bfbc1edbf272d&amp;type=3#Philosopher-Regular&quot;); font-size: 50px; -unity-text-align: upper-center;" />
+                <ui:Label text="1500/200" name="unit-info-health" class="unityInfoHealth" style="font-size: 35px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

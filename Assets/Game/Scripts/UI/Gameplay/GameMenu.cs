@@ -1,6 +1,7 @@
 using Unity.Entities;
 using System.Threading;
 using Game.Scripts.Inputs;
+using Game.Scripts.SaveSystems.Components;
 using Game.Scripts.Scenes;
 using UnityEngine.UIElements;
 using Game.Scripts.UI.Options;
@@ -9,6 +10,8 @@ namespace Game.Scripts.UI.Gameplay
 {
     public class GameMenu
     {
+        private Entity _menuEntity;
+        
         private VisualElement _options;
         private VisualElement _gameMenu;
         private VisualElement _pauseMenu;
@@ -23,15 +26,18 @@ namespace Game.Scripts.UI.Gameplay
         private Button _loadButton;
         private Button _quitButton;
         private Button _continueButton;
-        
         #endregion
 
         public GameMenu(UIDocument document)
         {
             InitializeUI(document);
+
+            EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
             
             _inputSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<PlayerInputSystem>();
             _inputSystem.OnPaused += MenuEnable;
+
+            _menuEntity = em.CreateEntity();
         }
 
         private void InitializeUI(UIDocument document)
@@ -69,7 +75,14 @@ namespace Game.Scripts.UI.Gameplay
             _continueButton.clicked += MenuDisable;
         }
 
-        private void SaveGame() {}
+        private void SaveGame()
+        {
+            EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
+            
+            if(!em.HasComponent<SaveEvent>(_menuEntity))
+                em.AddComponent<SaveEvent>(_menuEntity);
+        }
+        
         private void LoadGame() {}
 
         
